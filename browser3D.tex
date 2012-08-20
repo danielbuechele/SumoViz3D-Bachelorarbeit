@@ -1,0 +1,47 @@
+\section{Grundlagen der dreidimensionalen Computergrafik}
+
+\subsection{Historische Entwicklung der 3D-Technologie im Web}
+\label{hist}
+
+Erste Bemühungen dreidimensionale Inhalte in den Webbrowser zu bringen begannen im Jahr 1994. Angelehnt an die Nutzung von HTML für die Darstellung von Webseiten sollte eine Auszeichnungssprache für die Darstellung dreidimensionaler Inhalte geschaffen werden. Anforderungen an die neue Sprache waren Plattformunabhängigkeit, Erweiterbarkeit und Nutzbarkeit auch bei geringer Internet-Bandbreite. Das zu diesem Zweck gegründete \emph{Web3D}-Konsortium entwickelte die \emph{Virtual Reality Modeling Language (VRML)}. Am 26. Mai 1995 wurde die finale Spezifikation von \emph{VRML 1.0} veröffentlicht. Dort wird ein einfaches textbasiertes Format definiert, in dem Objekte geschachtelt abgelegt werden können. Diese Objekte können Kameras, Lichter, Materialien, aber auch dargestellte 3D-Objekte oder Transformationen sein. Zur Speicherung der Szenen wird die Dateiendung \verb+.wrl+ (für engl. \emph{world}) vorgegeben. 1997 wurde \emph{VRML 2.0 (VRML97)} fertiggestellt und als ISO-Standard 14772-1:1997 definiert. Unteranderem wurde der VRML-1.0-Standard um Animationen und Nutzerinteraktionsmöglichkeiten erweitert.
+
+Für die Darstellung von VRML-Inhalten gibt es einige Browser-Plugins, jedoch integrieret nahezu kein Browser-Hersteller den Standard direkt in sein Produkt. In den folgenden Jahren entstanden viele weitere Dateiformate zur Speicherung von 3D-Szenen mit Augenmerk auf die Darstellung im Browser. Unter anderem trat das XML-basierte Format \emph{X3D} die Nachfolge von VRML an. Das Web3D-Konsortium schlägt vor den X3D-Standard komplett in HTML5 zu integrieren, jedoch hat das W3C das bisher abgelehnt: \emph{``Embedding 3D imagery into XHTML documents is the domain of X3D, or technologies based on X3D that are namespace-aware.''} \cite{nox3d} Ähnlich wie bei \emph{SVG} oder \emph{MathML} soll so eine native Darstellung ohne Plugin ermöglicht werden. 
+
+
+
+\subsection{Deklarative und imperative 3D-Darstellung in Browsern}
+
+\begin{table}
+\caption{Caption needs to be before the label.}
+\centering
+\begin{tabular}{l||c|c}
+     & \textbf{2D} & \textbf{3D} \\
+\hline
+\hline
+    \textbf{Deklarativ} & SVG & X3D\footnotemark \\
+\hline
+    \textbf{Imperativ} & canvas & WebGL
+\end{tabular}
+\footnotetext{nicht vom W3C standardisiert}
+\label{tbl:tablelabel}
+\end{table}
+
+Die Darstellung von zwei- und dreidimensionalen Grafiken im Browser kann grundlegend auf zwei verschiedene Arten erfolgen: Zum einen ist es möglich den Szenengraph als Teil des HTML-Dokuments zu deklarieren. Somit sind die einzelnen Objekte der Grafik gleichberechtigt mit HTML-Elementen auf der Seite. Jedes Objekt der Grafik ist im DOM-Baum integriert und kann per CSS oder JavaScript selektiert und modifiziert werden. Zur Darstellung zweidimensionaler Grafiken ist das \emph{SVG}-Format im HTML5-Standard aufgenommen. Das Äquivalent für dreidimensionale Grafiken, X3D, ist wie in Kapitel \ref{hist} beschreiben nicht Teil des Standards.
+
+Zum anderen können Grafiken imperativ auf eine Zeichenfläche gezeichnet werden. Als Zeichenfläche wird das canvas-Element genutzt und ist dabei das einzige Objekt der Grafik, dass im DOM-Baum verankert ist. Inhalte die auf die Zeichenfläche gezeichnet wurden können nicht mehr verändert werden. Die Zeichenfläche kann lediglich komplett oder in Ausschnitten geleert und/oder überzeichnet werden. HTML5 definiert die 2D-Fähigkeiten des canvas-Elements und Verwendung von WebGL für 3D-Inhalte.
+
+%http://www.w3.org/TR/2dcontext/
+
+
+%http://www.web3d.org/x3d/wiki/index.php/X3D_and_HTML5
+%http://www.x3dom.org/?page_id=2
+
+
+
+
+
+%http://www.web3d.org/x3d/specifications/vrml/VRML1.0/
+
+%http://www.web3d.org/x3d/specifications/vrml/ISO-IEC-14772-VRML97/
+
+%http://www.cs.vu.nl/%7Eeliens/documents/vrml/reference/BOOK.HTM

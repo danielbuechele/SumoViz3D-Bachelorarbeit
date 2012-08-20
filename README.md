@@ -9,8 +9,17 @@
 		1. Historie von 3D-Technologie im Web
 	4. WebGL
 		1. Technik und Funktionsumfang
+			1. Die WebGL-Rendering-Pipeline
 		2. Verbreitung und Implementierung in den verschiedenen Browsern
-		3. die THREE.js Bibliothek
+			1. Vergleich der WebGL-Fähigkeiten ausgewählter Browser
+			2. Marktanteile der Webbrowser
+			3. Mobile Verfügbarkeit von WebGL
+		3. Sicherheit in WebGL
+			1. Denial-of-Service-Attacken
+			2. Zugriff auf den Frame-Buffer
+			3. Cross-Domain-Texturen
+		4. WebGL-Bibliotheken
+			1. die THREE.js Bibliothek
 2. Entwicklung von SumoViz3D
 	1. Anforderungen und grundlegende Funktionsweise
 		1. Ausgangsdaten und deren Aufbereitung

@@ -1,13 +1,14 @@
 # Webbasierte 3D Postvisualisierung von Fußgängersimulationsergebnissen
 
 1. Einführung und Grundlagen
-	1. Entwicklung aktueller Webtechnologien
-	2. der HTML5 Standard
-		1. canvas-Element
-		2. JavaScript und DOM-APIs
-	3. Grundlagen der dreidimensionalen Computergrafik
-		1. Historie von 3D-Technologie im Web
-	4. WebGL
+	1. Moderne Webtechnologien
+		1. der HTML5-Standard
+			1. DOM und JavaScript APIs 
+			2. Das canvas-Element
+	2. Grundlagen der dreidimensionalen Computergrafik
+		1. Historische Entwicklung der 3D-Technologie im Web
+		2. Deklarative und imperative 3D-Darstellung in Browsern
+	3. WebGL
 		1. Technik und Funktionsumfang
 			1. Die WebGL-Rendering-Pipeline
 		2. Verbreitung und Implementierung in den verschiedenen Browsern

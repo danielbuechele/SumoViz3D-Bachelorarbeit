@@ -15,10 +15,10 @@ WebGL bringt nun die Möglichkeit OpenGL-ES-2.0-Inhalte im Browser darzustellen u
 
 \subsection{Technik und Funktionsumfang}
 
-Die WebGL-Programmierung erfolgt in JavaScript und in daran angelehnten Shader-Code. Das canvas-Element wird als Zeichenfläche für die WebGL-Inhalte verwendet. Wie jedes andere HTML-Element kann das canvas-Element über oder unter anderen Elementen dargestellt werden. So ist auch die Überlagerung von HTML- und WebGL-Inhalten möglich. Laut Spezifikation definiert dieses Element einen Funktionsaufruf der Form \verb+canvas.getContext(contextId [, ... ])+ bei dem ein Schlüsselwort in Form eines Strings als \verb+contextId+ übergeben wird. \cite{W3Ccanvas} Die \emph{WHATWG} spezifiziert zwei mögliche Kontexte: \verb+2d+ und \verb+webgl+. \cite{WHATWGcanvasContext} Der Funktionsaufruf liefert ein Objekt zurück das die jeweilige API bereitstellt oder \verb+null+ falls ein entsprechender Kontext nicht unterstützt wird.
- 
-Die Initialisierung eines WebGL-Kontexts kann wie folgt aussehen:
- 
+Die WebGL-Programmierung erfolgt in JavaScript und die Programmierung der Shader in GLSL, deren Syntax ähnlich zu JavaScript ist. Das canvas-Element wird als Zeichenfläche für die WebGL-Inhalte verwendet. Wie jedes andere HTML-Element kann das canvas-Element über oder unter anderen Elementen des Dokuments dargestellt werden. So ist auch die Überlagerung von HTML- und WebGL-Inhalten möglich.
+
+Mittels des in Kapitel \ref{initwebgl} beschriebenen Funktionsaufrufs kann die Initialisierung eines WebGL-Kontexts wie folgt aussehen: \cite{html5rocks}
+
 \begin{verbatim}
 <script type="text/javascript">
     function init() {
@@ -33,9 +33,9 @@ Die Initialisierung eines WebGL-Kontexts kann wie folgt aussehen:
     window.onload = init;
 </script>
 <canvas id="c"></canvas>
-\end{verbatim}
-    
-Zusätzlich können Vertex- und Fragment-Shader mit folgendem Mark-Up ausgezeichnet und auch in JavaScript programmiert werden:
+\end{verbatim}   
+
+Zusätzlich können Vertex- und Fragment-Shader mit folgendem Mark-Up ausgezeichnet werden:
 
 \begin{verbatim}
 <script id="vshader" type="x-shader/x-vertex">
@@ -48,12 +48,12 @@ Zusätzlich können Vertex- und Fragment-Shader mit folgendem Mark-Up ausgezeichne
 
 
 \subsubsection{Die WebGL-Rendering-Pipeline}
-Folgende Schritte werden bei der Berechnung eines Bilds bei der OpenGL-ES-/WebGL-Technologie durchlaufen. Das Vorgehen weitaus identisch mit der Arbeitsweise anderer Grafik-Bibliotheken. \cite{beginnersGuide} \cite{operawebgl} \cite{Shreiner}
+Folgende Schritte werden bei der Berechnung eines Bilds bei der OpenGL-ES-/WebGL-Technologie durchlaufen. Der Ablauf ist vereinfacht dargestellt und weitaus identisch mit der Arbeitsweise anderer Grafik-Bibliotheken. \cite{beginnersGuide} \cite{operawebgl} \cite{Shreiner}
 
 \begin{enumerate}
     \item Wie für 3D-Renderingprozesse üblich verwendet WebGL polygonale Modellierung. Das bedeutet, dass Objekte aus Polygonen zusammengesetzt werden. Üblicherweise und auch in WebGL werden dafür Dreiecke verwendet. In JavaScript-Code wird nun eine Menge von Punkten (Vertices) definiert und in einem Array gespeichert. Zu jedem Vertex können neben der Position im dreidimensionalen Raum noch die Farbe, Transparenz und Texturkoordinaten gespeichert werden. Ein zweites Array ordnet die Indizes des Vertex-Arrays zu Dreiergruppen zusammen und gibt die Reihenfolge an, in der die Punkte zu Dreiecken zusammengesetzt werden vor.
     
-    \item Das Vertex- und das Index-Array werden dann an die Grafikkarte übergeben. Für jedes Vertex wird nun ein Unterprogramm, der so genannte \textbf{Vertex-Shader}, aufgerufen, der Operationen auf jedem einzelnen Vertex ausführen kann. Hier können Manipulationen an den Objekten vorgenommen werden. Außerdem wird mit Hilfe einer Matrixmultiplikation die Projektion des dreidimensionalen Punkts auf die zweidimensionale Fläche berechnet.
+    \item Das Vertex- und das Index-Array werden dann an die Grafikkarte übergeben. Für jedes Vertex wird nun ein Unterprogramm, der so genannte \textbf{Vertex-Shader}, aufgerufen, der Operationen auf jedem einzelnen Vertex ausführen kann. Hier können Manipulationen an den Formen der Objekt vorgenommen werden. Außerdem wird mit Hilfe einer Matrixmultiplikation die Projektion des dreidimensionalen Punkts auf die zweidimensionale Fläche zur Anzeige auf dem Bildschirm berechnet.
     
     \item Anschließend wird in der Grafikkarte das Bild \textbf{rasterisiert}. Dabei wird die zweidimensionale Projektion mit einem Pixelraster der Größe des canvas-Elements überlagert und jeder Punkt einem Pixel zugeordnet. Hier können auch Kantenglättungs-Mechanismen (Antialiasing) angewendet werden. Die Farben zwischen zwei Vertices kann mit Hilfe der zu den Vertices gespeicherten Farben interpoliert werden.
     
@@ -142,11 +142,11 @@ Um dennoch entfernte Ressoucen nutzen zu können wurde \emph{Cross-Origin-Resourc
 
 \subsection{WebGL-Bibliotheken}
 
-Um den Umgang mit WebGL zu vereinfachen gibt es einige Bibliotheken. Diese stellen beispielsweise geometrische Grundformen wie Würfel, Kugeln, Zylinder, etc. zur Verfügung. Außerdem lassen sich WebGL-Aufrufe somit mittels typischer JavaScript-Syntaktik ausführen, ohne die OpenGL-typischen Aufrufe nutzen zu müssen. Unterschiedliche Implementierungen verschiedener Browser können angefangen werden und für den Programmierer unsichtbar gemacht werden.
+Um den Umgang mit WebGL zu vereinfachen gibt es einige Bibliotheken. Diese stellen beispielsweise geometrische Grundformen wie Würfel, Kugeln, Zylinder, etc. zur Verfügung. Außerdem lassen sich somit WebGL-Aufrufe mittels typischer JavaScript-Syntaktik ausführen, ohne die OpenGL-typischen Aufrufe nutzen zu müssen. Unterschiedliche Implementierungen verschiedener Browser können angefangen werden und für den Programmierer unsichtbar gemacht werden.
 
 \subsubsection{die THREE.js-Bibliothek}
 
-Entwickelt von \emph{Ricardo Cabello Miguel} ist \emph{THREE.js} eine der am weitesten verbreiteten Bibliotheken für WebGL. Seit 2010 wird THREE.js entwickelt und befindet sich aktuell in der Version r50\footnote{Stand: 19. August 2012}. Einige elementare Bestanteile der Bibliothek sollen im Folgenden vorgestellt werden.
+Entwickelt von \emph{Ricardo Cabello Miguel} ist \emph{THREE.js} eine der am weitesten verbreiteten Bibliotheken für WebGL. Seit 2010 wird THREE.js entwickelt und befindet sich aktuell in der Version r50\footnote{Stand: 19. August 2012}. Einige elementare Bestanteile der Bibliothek sollen im Folgenden vorgestellt werden. \ref{threejsdocs}
 
 \begin{itemize}
 \item \textbf{Renderer:} Neben der Ausgabe in den \verb+webgl+-Kontext, ist es in einem begrenzen Maße auch möglich die Ausgabe in eine \emph{SVG}-Datei, oder den \verb+2d+-Kontext des canvas-Elements auszugeben. Jedoch ist nur die WebGL-Ausgabe hardwarebeschleunigt. Für nicht WebGL-fähige Browser kann in einigen Anwendungsfällen eine der alternativen Ausgaben genutzt werden.

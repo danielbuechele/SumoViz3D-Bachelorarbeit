@@ -1,13 +1,13 @@
 \section{WebGL}
 
 
-Die \emph{Khronos Group} ist ein Konsortium aus über 100 Firmen, die es sich seit Januar 2000 zum Ziel gesetzt hat offene Standards für Mediendarstellung auf Computern, mobilen Geräten und in integrierten Systemen zu definieren. Als gemeinnützige Organisation arbeitet die Gruppe nicht gewinnorientiert und finanziert sich lediglich aus den jährlichen Beiträgen ihrer Mitglieder. In verschiedenen Arbeitsgruppen sollen Industrie-Standards entwickelt werden und linzenzfrei zur Verfügung gestellt werden. Dazu gibt es das \emph{Khronos IP Framework}--eine Vereinbarung zwischen den Khronos-Mitgliedern, keine Patentstreitigkeiten bezüglich der Khronos-Standards gerichtlich auszutragen. \cite{KhronosAbout}
+Die \emph{Khronos Group} ist ein Konsortium aus über 100 Firmen, die es sich seit Januar 2000 zum Ziel gesetzt hat, offene Standards für Mediendarstellung auf Computern, mobilen Geräten und in integrierten Systemen zu definieren. Als gemeinnützige Organisation arbeitet die Gruppe nicht gewinnorientiert und finanziert sich lediglich aus den jährlichen Beiträgen ihrer Mitglieder. In verschiedenen Arbeitsgruppen sollen Industrie-Standards entwickelt und linzenzfrei zur Verfügung gestellt werden. Dazu gibt es das \emph{Khronos IP Framework}--eine Vereinbarung zwischen den Khronos-Mitgliedern, keine Patentstreitigkeiten bezüglich der Khronos-Standards gerichtlich auszutragen. \cite{KhronosAbout}
 
 Der älteste Standard der Khronos-Gruppe ist \emph{OpenGL (Open Graphics Library)}, der 1992 von \emph{Silicon Graphics Inc. (SGI)} entwickelt wurde. OpenGL spezifiziert eine hardwareunabhängige Software-Schnittstelle (API) zum Grafikprozessor mit mehreren hundert Befehlen, einer kleinen Menge geometrischer Primitive und einer eigenen Shader-Programmiersprache \emph{OpenGL Shading Language (GLSL)}. Die meisten großen Betriebssysteme, darunter Windows, Mac OS und Linux, unterstützen OpenGL. \cite{Shreiner} \cite{SGI} \cite{KhronosAbout2}
 
-Als proprietäre Alternative zu OpenGL bietet Microsoft \emph{Direct3D} für die Windows- und XBox-Plattform, sowie in einer angepassten Version für Microsofts mobile Betriebssysteme, an.
+Als proprietäre Alternative zu OpenGL bietet Microsoft \emph{Direct3D} für die Windows- und XBox-Plattform an. Zudem gibt es eine angepassten Version für Microsofts mobiles Betriebssystem \emph{Windows Phone Series}.
 
-Ausgehend vom OpenGL-Standard entwickelte die Khronos Group einen weiteren Standard: \emph{OpenGL for Embedded Systems} (OpenGL ES) ist eine Teilmenge von OpenGL, die speziell für den Einsatz auf mobilen Geräten wie etwa Smartphones oder Spielekonsolen entwickelt wurde und findet eine hohe Verbreitung unter anderem in Googles Android\cite{devGoogle} oder Apples iOS\cite{devApple}. Applikationen die gegen OpenGL ES geschrieben wurden laufen auch unter der entsprechenden Version von OpenGL. Andersherum ist das nicht der Fall.
+Ausgehend vom OpenGL-Standard entwickelte die Khronos Group einen weiteren Standard: \emph{OpenGL for Embedded Systems (OpenGL ES)} ist eine Teilmenge von OpenGL, die speziell für den Einsatz auf mobilen Geräten wie etwa Smartphones oder Spielekonsolen entwickelt wurde und eine hohe Verbreitung unter anderem in Googles Android\cite{devGoogle} oder Apples iOS\cite{devApple} findet. Applikationen die gegen OpenGL ES geschrieben wurden laufen auch unter der entsprechenden Version von OpenGL. Andersherum ist das nicht der Fall.
 
 
 WebGL bringt nun die Möglichkeit OpenGL-ES-2.0-Inhalte im Browser darzustellen und dabei die Hardware-Beschleunigung der Grafikkarte zu nutzen. Bisher konnten Webinhalte lediglich den Hauptprozessor (CPU) für ihre Berechnungen nutzen. Grafikkarten sind hochgradig für die typischen Berechnungen von 3D-Darstellungen optimiert und können die Prozessorleistung bei weitem übertreffen. Mittels der WebGL-Technologie können Applikationen die zum Beispiel für mobile Geräte konzipiert wurden ohne größere Anpassungen im Browser ausgeführt werden. Die Anwendungsgebiete sind dabei vielfältig: Von Visualisierungen, Simulationen, Spielen, Darstellung mathematischer Funktionen bis zu Kunst ist alles denkbar. \cite{operawebgl} \cite{webgl}
@@ -51,13 +51,13 @@ Zusätzlich können Vertex- und Fragment-Shader mit folgendem Mark-Up ausgezeichne
 Folgende Schritte werden bei der Berechnung eines Bilds bei der OpenGL-ES-/WebGL-Technologie durchlaufen. Der Ablauf ist vereinfacht dargestellt und weitaus identisch mit der Arbeitsweise anderer Grafik-Bibliotheken. \cite{beginnersGuide} \cite{operawebgl} \cite{Shreiner}
 
 \begin{enumerate}
-    \item Wie für 3D-Renderingprozesse üblich verwendet WebGL polygonale Modellierung. Das bedeutet, dass Objekte aus Polygonen zusammengesetzt werden. Üblicherweise und auch in WebGL werden dafür Dreiecke verwendet. In JavaScript-Code wird nun eine Menge von Punkten (Vertices) definiert und in einem Array gespeichert. Zu jedem Vertex können neben der Position im dreidimensionalen Raum noch die Farbe, Transparenz und Texturkoordinaten gespeichert werden. Ein zweites Array ordnet die Indizes des Vertex-Arrays zu Dreiergruppen zusammen und gibt die Reihenfolge an, in der die Punkte zu Dreiecken zusammengesetzt werden vor.
+    \item Wie für 3D-Renderingprozesse üblich, verwendet WebGL polygonale Modellierung. Das bedeutet, dass Objekte aus Polygonen zusammengesetzt werden. Üblicherweise und auch in WebGL werden dafür Dreiecke verwendet. In JavaScript-Code wird nun eine Menge von Punkten (Vertices) definiert und in einem Array gespeichert. Zu jedem Vertex können neben der Position im dreidimensionalen Raum auch die Farbe, Transparenz und Texturkoordinaten gespeichert werden. Ein zweites Array ordnet die Indizes des Vertex-Arrays zu Dreiergruppen zusammen und gibt die Reihenfolge an, in der die Punkte zu Dreiecken zusammengesetzt werden.
     
-    \item Das Vertex- und das Index-Array werden dann an die Grafikkarte übergeben. Für jedes Vertex wird nun ein Unterprogramm, der so genannte \textbf{Vertex-Shader}, aufgerufen, der Operationen auf jedem einzelnen Vertex ausführen kann. Hier können Manipulationen an den Formen der Objekt vorgenommen werden. Außerdem wird mit Hilfe einer Matrixmultiplikation die Projektion des dreidimensionalen Punkts auf die zweidimensionale Fläche zur Anzeige auf dem Bildschirm berechnet.
+    \item Das Vertex- und Index-Array werden dann an die Grafikkarte übergeben. Für jedes Vertex wird ein Unterprogramm, der so genannte \textbf{Vertex-Shader}, aufgerufen, der Operationen auf jedem einzelnen Vertex ausführen kann. Hier können Manipulationen an den Formen des Objekts vorgenommen werden. Außerdem wird mit Hilfe einer Matrixmultiplikation die Projektion des dreidimensionalen Punkts auf die zweidimensionale Fläche zur Anzeige auf dem Bildschirm berechnet.
     
-    \item Anschließend wird in der Grafikkarte das Bild \textbf{rasterisiert}. Dabei wird die zweidimensionale Projektion mit einem Pixelraster der Größe des canvas-Elements überlagert und jeder Punkt einem Pixel zugeordnet. Hier können auch Kantenglättungs-Mechanismen (Antialiasing) angewendet werden. Die Farben zwischen zwei Vertices kann mit Hilfe der zu den Vertices gespeicherten Farben interpoliert werden.
+    \item Anschließend wird in der Grafikkarte das Bild \textbf{rasterisiert}. Dabei wird die zweidimensionale Projektion mit einem Pixelraster der Größe des canvas-Elements überlagert und jeder Punkt einem Pixel zugeordnet. Hier können auch Kantenglättungs-Mechanismen (Antialiasing) angewendet werden. Die Farben zwischen zwei Vertices können mit Hilfe der zugehörigen Farbwerte interpoliert werden.
     
-    \item Für jedes berechnete Pixel wird nun ein weiteres Unterprogramm aufgerufen: Der \textbf{Fragment-Sahder} kann die Farben des jeweiligen Pixels verändern und sorgt somit die Darstellung von Texturen und Oberflächenmaterialien.
+    \item Für jedes berechnete Pixel wird nun ein weiteres Unterprogramm aufgerufen: Der \textbf{Fragment-Shader} kann die Farbewerte des jeweiligen Pixels verändern und sorgt somit für die Darstellung von Texturen, Oberflächenmaterialien, Lichtern und Schatten.
     
     \item Das fertige Pixelbild wird im \textbf{Frame-Buffer} der Grafikkarte abgelegt und kann von dort aus dann im canvas-Element der Webseite dargestellt werden.
 \end{enumerate}
@@ -65,18 +65,18 @@ Folgende Schritte werden bei der Berechnung eines Bilds bei der OpenGL-ES-/WebGL
 
 \subsection{Verbreitung und Implementierung in den verschiedenen Browsern}
 
-Mitglieder der Khronos Group sind mit Google (Chrome), Apple (Safari), Mozilla (Firefox) und Opera unter anderem einige namenhafte Browser-Hersteller, die gemeinsam an der Entwicklung von WebGL arbeiten. Deshalb geschieht die Adaption von neuen Funktionen in den genannten Browsern meist schnell und flächendeckend.
+Mitglieder der Khronos Group sind mit Google (Chrome), Apple (Safari), Mozilla (Firefox) und Opera unter anderem einige namenhafte Browser-Hersteller, die gemeinsam an der Entwicklung von WebGL arbeiten. Deshalb geschieht die Adaption neuer Funktionen in den genannten Browsern meist schnell und flächendeckend.
 
 \subsubsection{Vergleich der WebGL-Fähigkeiten ausgewählter Browser}
 
 Für den Vergleich wurden die fünf Browser mit den größten Marktanteilen herangezogen. Gemeinsam decken diese fünf Browser 98,41\%\footnote{Stand: Juli 2012} des Desktop-Marktes ab. \cite{StatTop5Browser} Mobile Browser sind in diesem Vergleich ausgenommen und werden gesondert in Kapitel \ref{mobilewebGL} behandelt. 
 
-Der \emph{WHATWG}-Standard \cite{WHATWGcanvas} gibt für den WebGL-Standard das Schlüsselwort \verb+webgl+ vor, jedoch implementieren die verglichenen Browser alle ausschließlich das Schlüsselwort \verb+experimental-webgl+ und liefern für den Kontext \verb+webgl+ den Wert \verb+null+ zurück.\footnote{Stand: August 2012 (Chrome 21, Firefox 14, Safari 6.0, Opera 12.00)} Solange die Spezifikation nicht final ist und der Standard nicht vollständig implementiert wurde ist dieses Vorgehen vom \emph{W3C} und der \emph{WHATWG} empfohlen. \cite{W3Ccanvas} \cite{WHATWGcanvas}
+Der \emph{WHATWG}-Standard \cite{WHATWGcanvas} gibt für den Aufruf der Schnittstelle des WebGL-Kontexts das Schlüsselwort \verb+webgl+ vor, jedoch implementieren die verglichenen Browser alle ausschließlich das Schlüsselwort \verb+experimental-webgl+ und liefern für den Kontext \verb+webgl+ den Wert \verb+null+ zurück.\footnote{Stand: August 2012 (Chrome 21, Firefox 14, Safari 6.0, Opera 12.00)} Solange die Spezifikation nicht final ist und der Standard nicht vollständig implementiert wurde wird dieses Vorgehen vom \emph{W3C} und der \emph{WHATWG} empfohlen. \cite{W3Ccanvas} \cite{WHATWGcanvas}
 
 
 \paragraph{Microsoft Internet Explorer}
 
-Microsoft stuft die Implementierung von WebGL als zu gefährlich ein und verzichtet deshalb auf eine Integration in den \emph{Internet Explorer}. Problematisch sieht Microsoft dabei die direkte Bereitstellung der Grafikkarte für beliebige Webseiten-Betreiber. Sicherheitslücken in Grafikkarten-Treibern, die bisher nur lokal ausgenutzt werden konnten, stehen somit für das Internet offen. \cite{MSWebGL} Als alternative Technologie schlägt Microsoft die Eigenentwicklung \emph{Silverlight} vor, die seit der Version 5 ebenfalls hardwarebeschleunigte 3D-Darstellung unterstützt. \cite{Silverlight}
+Microsoft stuft die Implementierung von WebGL als zu gefährlich ein und verzichtet deshalb auf eine Integration in den \emph{Internet Explorer}. Problematisch sieht Microsoft dabei die direkte Bereitstellung der Grafikkarte für beliebige Webseiten-Betreiber. Sicherheitslücken in Grafikkarten-Treibern die bisher nur lokal ausgenutzt werden konnten, stehen somit für das Internet offen. \cite{MSWebGL} (vgl. Kapitel \ref{webglsec}) Als alternative Technologie schlägt Microsoft die Eigenentwicklung \emph{Silverlight} vor, die seit der Version 5 ebenfalls hardwarebeschleunigte 3D-Darstellung unterstützt. \cite{Silverlight}
 
 Dennoch lässt sich mittels Plugin eines Fremdanbieters die Unterstützung für WebGL ab Internet Explorer Version 8 nachrüsten. \cite{IEWebGL}
 
@@ -86,7 +86,7 @@ Dennoch lässt sich mittels Plugin eines Fremdanbieters die Unterstützung für Web
 \subsubsection{Marktanteile der Webbrowser}
 
 \begin{tabular}{l|rrrr}
-    \textbf{Browser} &   \vbox{\hbox{\strut \textbf{Marktanteil}}\hbox{\strut \textbf{gesamt}\cite{StatTop5Browser}}} & \vbox{\hbox{\strut \textbf{WebGL ab}}\hbox{\strut \textbf{Version}\footnotemark}} & \textbf{Releasedatum} & \vbox{\hbox{\strut \textbf{Marktanteil}}\hbox{\strut \textbf{WebGL-fähig}\cite{statVersion}}}\\
+    \textbf{Browser} &   \vbox{\hbox{\strut \textbf{Marktanteil}}\hbox{\strut \textbf{gesamt}\cite{StatTop5Browser}}} & \vbox{\hbox{\strut \textbf{WebGL ab}}\hbox{\strut \textbf{Version}\footnotemark}} & \textbf{Veröffentlichung} & \vbox{\hbox{\strut \textbf{Marktanteil}}\hbox{\strut \textbf{WebGL-fähig}\cite{statVersion}}}\\
 \hline
 \hline
     Google Chrome & 33,29\% & 9.0 & 03.02.2011 \cite{releaseChrome} & 32,89\% \\
@@ -105,59 +105,62 @@ Dennoch lässt sich mittels Plugin eines Fremdanbieters die Unterstützung für Web
 \footnotetext{Für den Vergleich wurden nur finale Versionen der jeweiligen Browser herangezogen. Alpha-, Beta- und Preview-Versionen sind ausgenommen und waren teilweise schon wesentlich früher verfügbar.}
 
 
-Basierend auf den Zahlen von StatCounter.com für Juni bis Juli 2012 haben WebGL-fähige Browserversionen einen Marktanteil von 59,21\%. Jedoch muss der Anteil der Browser, die WebGL-Inhalte korrekt darstellen geringer angegeben werden, da durch Inkompatibilitäten mit speziellen Grafikkarten einige Browserversionen WebGL deaktivieren. Hinzu kommt, dass in Safari mit deaktiviertem WebGL ausgeliefert wird, welches erst vom Benutzer manuell aktiviert werden muss. Daher lassen sich keine verlässlichen Zahlen über die genaue Verbreitung von Browsern mit aktivierter WebGL-Fähigkeit treffen ohne spezieller Erhebung dieser Daten.
+Basierend auf den Zahlen von StatCounter.com für Juni bis Juli 2012 haben WebGL-fähige Browserversionen einen Marktanteil von 59,21\%. Jedoch muss der Anteil der Browser, die WebGL-Inhalte korrekt darstellen geringer angegeben werden, da durch Inkompatibilitäten mit speziellen Grafikkarten einige Browserversionen WebGL deaktivieren. Hinzu kommt, dass Safari mit deaktiviertem WebGL ausgeliefert wird, welches erst vom Benutzer manuell aktiviert werden muss. Daher lassen sich ohne eigener Erhebung dieser Daten keine verlässlichen Aussagen über die genaue Verbreitung von Browsern mit aktivierter WebGL-Fähigkeit treffen.
 
 
 
 
 \subsubsection{Mobile Verfügbarkeit von WebGL} \label{mobilewebGL}
 
-Es wurde die Verfügbarkeit des WebGL-Standards auf den beiden führenden mobilen Betriebssystemen verglichen. \cite{mobileos} Dabei wird die Grundliegende Verfügbarkeit der OpenGL-Technologie sowie die Implementierung der WebGL-Technologie im mitgelieferten Browser betrachtet. 
+Es wurde die Verfügbarkeit des WebGL-Standards auf den beiden führenden mobilen Betriebssystemen verglichen. \cite{mobileos} Dabei wird die grundlegende Verfügbarkeit der OpenGL-Technologie sowie die Implementierung der WebGL-Technologie im mitgelieferten Browser betrachtet. 
 
 \paragraph{Apple iOS und Mobile Safari}
 
-Apple implementiert in iOS\footnote{Stand: iOS 5.1.1} OpenGL ES 1.1 und 2.0 für die Darstellung von 2D- und 3D-Inhalten. Applikationsentwickler können die Standards für die Darstellung ihrer Inhalte nutzen. \cite{iosopengl} Jedoch ist die Nutzung von OpenGL in Form von WebGL im systemeigenen Browser \emph{Mobile Safari} nicht möglich. Für in Applikationen eingebettete Web-Darstellungen lässt sich WebGL aktivieren, jedoch widerspricht die Nutzung Apples Richtlinien für Entwickler. Lediglich innerhalb Apples webbasiertem Werbenetzwerk \emph{iAd} ist die Nutzung von WebGL möglich. Außerdem kann die Darstellung von \emph{CSS3-Animationen} im Browser auf die Hardwarebeschleunigung zurückgreifen.
+Apple implementiert in iOS\footnote{Stand: iOS 5.1.1} OpenGL ES 1.1 und 2.0 für die Darstellung von 2D- und 3D-Inhalten. Applikationsentwickler können die Standards für die Darstellung ihrer Inhalte nutzen. \cite{iosopengl} Jedoch ist die Nutzung von OpenGL in Form von WebGL im systemeigenen Browser \emph{Mobile Safari} nicht möglich. Für in Applikationen eingebettete Web-Darstellungen lässt sich WebGL aktivieren, jedoch widerspricht die Nutzung Apples Richtlinien für Entwickler. Lediglich innerhalb Apples webbasiertem Werbenetzwerk \emph{iAd} ist die Nutzung von WebGL möglich. Außerdem kann die Darstellung von \emph{CSS3-Animationen} im Browser auf Hardwarebeschleunigung zurückgreifen. \cite{devApple}
 
 \paragraph{Android}
 
-Für die Entwicklung von Applikationen unterstützt die Android-Plattform ebenso den OpenGL ES 1.1 und ab Android 2.2 (API Level 8) auch den OpenGL ES 2.0 Standard. WebGL ist im Android Browser nicht verfügbar. Sony entwickelte eine Modifikation für den Android Browser die WebGL implementiert. \cite{sonywebgl} Diese wird bisher nur auf dem \emph{Sony Xperia} Smartphone eingesetzt.
+Für die Entwicklung von Applikationen unterstützt die Android-Plattform ebenso den OpenGL ES 1.1 und ab Android 2.2 (API Level 8) auch den OpenGL ES 2.0 Standard. \cite{devGoogle} WebGL ist im Android Browser nicht verfügbar. Sony entwickelte eine Modifikation für den Android Browser die WebGL implementiert. \cite{sonywebgl} Diese wird bisher nur auf dem \emph{Sony Xperia} Smartphone eingesetzt.
 
 \subsection{Sicherheit in WebGL}
+\label{webglsec}
+
+Im Mai 2011 beschrieb \emph{Context Information Security} mehrere mögliche Angriffsszenarien mit Hilfe von manipulierten WebGL-Inhalten. \cite{contextwebgl}
 
 \subsubsection{Denial-of-Service-Attacken}
 
-Im Mai 2011 beschrieb \emph{Context Information Security} mehrere mögliche Angriffsszenarien mit Hilfe von manipulierten WebGL-Inhalten. \cite{contextwebgl} Mittels sehr komplexer 3D-Geometrien oder extrem aufwändiger Shaderprogramme wird dabei die Grafikkarte so lange beansprucht, dass weder andere Programme noch das Betriebssystem die Grafikkarte nutzen können und der Rechner so unter Umständen abstürtzt.  \cite{contextwebgl2}
+Mittels sehr komplexer 3D-Geometrien oder extrem aufwändiger Shaderprogramme wird dabei die Grafikkarte so lange beansprucht, dass weder andere Programme noch das Betriebssystem die Grafikkarte nutzen können und der Rechner so unter Umständen abstürzt.  \cite{contextwebgl2}
 
 \subsubsection{Zugriff auf den Frame-Buffer}
 
-Die WebGL-Technologie ermöglicht Webseiten den Zugriff auf den Inhalt des Frame-Buffers der Grafikkarte. Laut Spezifikation ist der Zugriff auf den Teil des Frame-Buffers beschränkt, der den Inhalt des canvas-Elements speichert. Jedoch kam es durch Fehlerhafte Implementierungen des WebGL-Standards und Bugs in Grafikkarten-Treibern dazu, dass auch andere Inhalte des Frame-Buffers in das canvas-Element gezeichnet werden konnten. So konnten Informationen ausgelesen werden, die der Nutzer beispielsweise in anderen Applikationen oder auf seinem Desktop dargestellt hat. Es ist nicht ausgeschlossen, dass durch neue Sicherheitslücken dieser Angriff wieder möglich wird. \cite{contextwebgl2}
+Die WebGL-Technologie ermöglicht Webseiten den Zugriff auf den Inhalt des Frame-Buffers der Grafikkarte. Laut Spezifikation ist der Zugriff auf den Teil des Frame-Buffers beschränkt, der den Inhalt des canvas-Elements speichert. Jedoch kam es durch fehlerhafte Implementierungen des WebGL-Standards und Bugs in Grafikkarten-Treibern dazu, dass auch andere Inhalte des Frame-Buffers in das canvas-Element gezeichnet werden konnten. So konnten Informationen ausgelesen werden, die der Nutzer beispielsweise in anderen Applikationen oder auf seinem Desktop dargestellt hat. Es ist nicht ausgeschlossen, dass durch neue Sicherheitslücken dieser Angriff wieder möglich wird. \cite{contextwebgl2}
 
 \subsubsection{Cross-Domain Texturen}
 
-Das Nachladen externer Modelle oder Texturen kann jedoch den Zugriff auf fremde Ressourcen erfordern. Ein Sicherheitskonzept, das mit \emph{Netscape Navigator 2.0} für clientseitige Skriptsprachen, wie beispielsweise JavaScript, eingeführt wurde ist die \emph{Same-Origin-Policy (SOP)}. Diese verbietet solche Zugriffe, zum Beispiel per \emph{XMLHttpRequest}. Sie verlangt, dass Zugriffe innerhalb einer Webseite nur auf Ressourcen der selben Domain, über den selben Port mittels des selben Protokolls erfolgen dürfen. Das betrifft nicht das Einbinden fremder Inhalte, wie das einbetten eines Bildes, sondern den lesenden Zugriff eines Skripts auf solche Inhalte. Dadurch könnten beispielsweise Inhalte die eine Zugangsberechtigung benötigen lokal von fremden Seiten eingelesen und übertragen werden. \cite{MDNsop}
+Das Nachladen externer Modelle oder Texturen kann den Zugriff auf fremde Ressourcen erfordern. Ein Sicherheitskonzept, das mit \emph{Netscape Navigator 2.0} für clientseitige Skriptsprachen, wie beispielsweise JavaScript, eingeführt wurde ist die \emph{Same-Origin-Policy (SOP)}. Diese verbietet solche Zugriffe, zum Beispiel per \emph{XMLHttpRequest}. Sie verlangt, dass Zugriffe innerhalb einer Webseite nur auf Ressourcen der selben Domain, über den selben Port mittels des selben Protokolls erfolgen dürfen. Das betrifft nicht das Einbinden fremder Inhalte, wie das Einbetten eines Bildes, sondern den lesenden Zugriff eines Skripts auf solche Inhalte. Dadurch könnten beispielsweise Inhalte die eine Zugangsberechtigung benötigen lokal von fremden Seiten eingelesen und übertragen werden. \cite{MDNsop}
 
-Um dennoch entfernte Ressoucen nutzen zu können wurde \emph{Cross-Origin-Resource-Sharing (CORS)} entwickelt. Dabei gibt der ausliefernde Server in seinem HTTP-Header an, welche fremden Seiten seine Ressourcen lesen dürfen. Dabei ist auch die verwendung einer Wildcard \verb+*+ möglich. \cite{cors} \cite{corsbug}
+Um dennoch entfernte Ressoucen nutzen zu können wurde \emph{Cross-Origin-Resource-Sharing (CORS)} entwickelt. Dabei gibt der ausliefernde Server in seinem HTTP-Header an, welche fremden Seiten seine Ressourcen lesen dürfen. Dabei ist auch die Verwendung einer Wildcard \verb+*+ möglich. \cite{cors} \cite{corsbug}
 
 
 
 \subsection{WebGL-Bibliotheken}
 
-Um den Umgang mit WebGL zu vereinfachen gibt es einige Bibliotheken. Diese stellen beispielsweise geometrische Grundformen wie Würfel, Kugeln, Zylinder, etc. zur Verfügung. Außerdem lassen sich somit WebGL-Aufrufe mittels typischer JavaScript-Syntaktik ausführen, ohne die OpenGL-typischen Aufrufe nutzen zu müssen. Unterschiedliche Implementierungen verschiedener Browser können angefangen werden und für den Programmierer unsichtbar gemacht werden.
+Um den Umgang mit WebGL zu vereinfachen gibt es einige Bibliotheken. Diese stellen beispielsweise geometrische Grundformen wie Würfel, Kugeln, Zylinder, etc. zur Verfügung. Außerdem lassen sich somit WebGL-Aufrufe mittels JavaScript ausführen, ohne eigenen Shader-Code in \emph{GLSL} nutzen zu müssen. Komplexe mathematische Berechnungen die für die Realisierung verschiedener Kameras, Materialen und Beleuchtungsmodelle nötig wären, können mit Bibliotheken abstrahiert werden. Zusätzlich können unterschiedliche Implementierungen verschiedener Browser angefangen und für den Programmierer unsichtbar gemacht werden.
 
 \subsubsection{die THREE.js-Bibliothek}
 
-Entwickelt von \emph{Ricardo Cabello Miguel} ist \emph{THREE.js} eine der am weitesten verbreiteten Bibliotheken für WebGL. Seit 2010 wird THREE.js entwickelt und befindet sich aktuell in der Version r50\footnote{Stand: 19. August 2012}. Einige elementare Bestanteile der Bibliothek sollen im Folgenden vorgestellt werden. \ref{threejsdocs}
+Entwickelt von \emph{Ricardo Cabello Miguel} ist \emph{THREE.js} eine der am weitesten verbreiteten Bibliotheken für WebGL. Seit 2010 wird THREE.js entwickelt und befindet sich aktuell in der Version r50\footnote{Stand: 19. August 2012}. Einige elementare Bestandteile der Bibliothek sollen im Folgenden vorgestellt werden. \ref{threejsdocs}
 
 \begin{itemize}
-\item \textbf{Renderer:} Neben der Ausgabe in den \verb+webgl+-Kontext, ist es in einem begrenzen Maße auch möglich die Ausgabe in eine \emph{SVG}-Datei, oder den \verb+2d+-Kontext des canvas-Elements auszugeben. Jedoch ist nur die WebGL-Ausgabe hardwarebeschleunigt. Für nicht WebGL-fähige Browser kann in einigen Anwendungsfällen eine der alternativen Ausgaben genutzt werden.
+\item \textbf{Renderer:} Neben der Ausgabe in den \verb+webgl+-Kontext, ist in einem begrenzen Maße auch die Ausgabe in eine \emph{SVG}-Datei, oder in den \verb+2d+-Kontext des canvas-Elements möglich. Jedoch ist nur die WebGL-Ausgabe hardwarebeschleunigt. Für nicht WebGL-fähige Browser kann in einigen Anwendungsfällen eine der alternativen Ausgaben genutzt werden.
 
-\item \textbf{Kameras:} THREE.js hat zwei verschiedene Kamera-Objekte zur Verfügung. Eine orthographische Kamera die eine parallele Projektion auf die Sichtebene vornimmt. Sowie eine persketivische Kamera, die dem Verhalten des menschlichen Auge entspricht. Hierbei wird das Sichtfeld mit einem Winkel angegeben.
+\item \textbf{Kameras:} THREE.js hat zwei verschiedene Kamera-Objekte zur Verfügung. Eine orthographische Kamera die eine parallele Projektion auf die Sichtebene vornimmt, sowie eine persketivische Kamera, die dem Verhalten des menschlichen Auge entspricht. Hierbei wird das Sichtfeld mit einem Winkel angegeben.
 
-\item \textbf{Geometische Primitive:} Einige geometische Primitive sind in der Bibliothek bereits angelegt und können verwendet werden. Darunter befinden sich: Würfel, Zylinder, Ebene, Kugel, Torus,...
+\item \textbf{Geometische Primitive:} Einige geometische Primitive sind in der Bibliothek bereits angelegt und können verwendet werden. Darunter befinden sich: Würfel, Zylinder, Ebene, Kugel und Torus.
 
-\item \textbf{Lichter:} Verschiedene Lichter sind in THREE.js definiert, die sich unterschiedlich auf die Szene auswirken. Das \verb+AmbientLight+ hellt die gesamte Szene auf, hat keine Richtung und wirft keine Schatten. Das \verb+DirectionalLight+ ist gerichtet, hat aber keine Quelle. Das Licht verläuft parallel und wirft Schatten. \verb+SpotLight+ und \verb+PointLight+ haben eine punktförmige Position. Beide strahlen das Licht kugelförmig ab, wobei es linear abgeschwächt wird. Nur SpotLights können Schatten werfen. 
+\item \textbf{Lichter:} In THREE.js sind verschiedene Lichter definiert, die sich unterschiedlich auf die Szene auswirken. Das \verb+AmbientLight+ hellt die gesamte Szene auf, hat keine Richtung und wirft keine Schatten. Das \verb+DirectionalLight+ ist gerichtet, hat aber keinen Ursprung. Das Licht verläuft parallel und wirft Schatten. \verb+SpotLight+ und \verb+PointLight+ haben eine punktförmige Position. Beide strahlen das Licht kugelförmig ab, wobei es linear abgeschwächt wird. Nur SpotLights können Schatten werfen. 
 
-\item \textbf{Oberflächenmaterialien:} Die unterschiedlichen Oberflächenmaterialien wirken sich auf das Verhalten von Licht auf den Objekten aus. Das \verb+BasicMaterial+ ignoriert einfallendes Licht und zeigt das Objekt gleichmäßig in der angegebenen Farbe dar. Für die realistische Darstellung bieten sich \verb+PhongMaterial+ und \verb+LambertMaterial+ an, die einfallendes Licht nach den jeweiligen Beleuchtungsmodellen verarbeiten und so die Farbdarstellung berechnen. Zusätzlich ist es möglich Grafik-Texturen auf Objekten abzubilden.
+\item \textbf{Oberflächenmaterialien:} Die unterschiedlichen Oberflächenmaterialien wirken sich auf das Verhalten von Licht auf den Objekten aus. Das \verb+BasicMaterial+ ignoriert einfallendes Licht und stellt das Objekt gleichmäßig in der angegebenen Farbe dar. Für die realistische Darstellung bieten sich \verb+PhongMaterial+ und \verb+LambertMaterial+ an, die einfallendes Licht nach den jeweiligen Beleuchtungsmodellen verarbeiten und so die Farbdarstellung berechnen. Zusätzlich ist es möglich Grafiktexturen auf Objekten abzubilden.
 
 
 \end{itemize}

@@ -1,0 +1,26 @@
+\subsection{Importieren der Ausgangsdaten}
+
+Die Ergebnisse der Simulation werden in eine Text-Datei geschrieben die zur Verwendung mit SumoViz eingelesen und in einer Datenbank abgelegt wird. Die Datensätze sind zeilenweise in der Ausgangsdatei abgelegt und in Blöcke unterteilt. Blöcke innerhalb der Datei werden mit \verb+Begin+ und \verb+End+ sowie dem Blocknamen gekennzeichnet. Beispielsweise sind die Daten der Baugeometrie im Block \verb+Begin geometry+ angelegt. Die Ausgangsdatei enthält immer einen Block mit Parametern zur Simulation, die in SumoViz nicht verwendet werden, da die Parameter hauptsächlich für die Erstellung der Simulation, nicht aber für die Visualisierung nötig sind.
+
+
+Zum Importieren der Daten in die CouchDB-Datenbank exsistiert das node.js-Skript dataimport.js, das die Datei block- und zeilenweise Verarbeitet, die Daten in
+
+
+
+
+
+
+Durch Zeilen mit den Schlüsselwörtern \verb+Begin Data+ und \verb+End Data+ ist innerhalb der Ausgabedatei ein Abschnitt mit den Fußgängerpositionsdaten ausgezeichnet. Die Datensätze werden zeilenweise angegeben und beinhalten pro Datensatz einen Zeitstempel, eine Identifikationsnummer des Fußgängers, Positionsdaten und Angaben zur Ebene auf der sich der Fußgänger befindet sowie zur Dichte. Pro Zeitpunkt und sichtbaren Fußgänger wird eine Zeile in der Ausgabedatei generiert. Die Werte des Datensatzes sind mit Leerzeichen getrennt.
+\begin{table}[h]
+\centering
+\begin{tabular}{l||l|l|l|l|l|l|l}
+& \textbf{timecode} & \textbf{pedid} & \textbf{x} & \textbf{y} & \textbf{z} & \textbf{level} & \textbf{density} \\
+\hline
+\hline
+\textbf{Datentyp} & \verb+float+ & \verb+int+ & \verb+float+ & \verb+float+ & \verb+float+ & \verb+int+ & \verb+float+ \\
+\hline
+\textbf{Beispiel} & \verb+14.02+ & \verb+32+ & \verb+30.06+ & \verb+36.04+ & \verb+0.00+ & \verb+0+ & \verb+0.17+ \\
+\end{tabular}
+\label{tbl:tablelabel}
+\caption{Fußgängerdatenformat}
+\end{table}

@@ -22,6 +22,10 @@
 \usepackage[plainpages=false,bookmarks=true,bookmarksopen=true,colorlinks=true,
   linkcolor=darkred,citecolor=darkgreen,filecolor=darkmagenta,
   menucolor=darkred,urlcolor=darkcyan]{hyperref}
+  
+
+\usepackage{wrapfig}
+
 
 % pdflatex: Bilder in den Formaten .jpeg, .png und .pdf
 % latex: Bilder im .eps-Format
@@ -136,10 +140,14 @@ sowie alle benutzten Quellen und Hilfsmittel angegeben habe.
 \fancyfoot[LE,RO]{\thepage}
 
 \chapter{Einführung und Grundlagen}
-\include{html5}
-\include{browser3D}
-\include{webGL}
+    \include{html5}
+    \include{browser3D}
+    \include{webGL}
 
+\chapter{Entwicklung von SumoViz3D}
+\include{couchDB}
+\include{controls}
+\include{pedestrians}
 
 %______________________________________________________________________
 

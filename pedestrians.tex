@@ -1,0 +1,35 @@
+\section{Darstellung der Fußgängerdaten}
+
+Für die Darstellung vieler kleiner Elemente oder gibt es in der Computergrafik sogenante Partikelsysteme. Haupteinsatzzweck ist die Berechnung von Effekten wie Feuer, Rauch, Nebel oder Wasser. Ein Partikelsystem besteht aus einer großen Menge einzelner Partikel, von denen jeder eigene Eigenschaften haben kann. Der Vorteil der Verwendung eines Partikelsystems gegenüber einzelnen Objekten ist die Minimierung der Objektanzahl. Ein Partikelsystem ist technisch nur ein einziges Objekt. Jeder Partikel wird als Vertex dieses Objekts an die Grafikkarte übergeben. ...
+
+Zur Darstellung wird das \verb+ParticleBasicMaterial+ verwendet. 
+%http://mrdoob.github.com/three.js/docs/50/#ParticleBasicMaterial
+Billboard
+
+\subsection{Einfärbung der Fußgängerobjekte}
+Als Billboard wird die Grafik einer weißen Kugel mit Schatten verwendet. Darauf wird die zum jeweiligen Vertex gespeicherte Farbe multipliziert. Die dunklen Flächen bleiben dabei dunkel, die hellen Flächen werden eingefärbt. So lassen sich verschiedene Daten visualisieren. SumoViz3D hat folgende Einfärbungsmöglichkeiten zur Verfügung:
+
+\subsubsection{Einfärbung nach Dichte}
+
+
+Standardeinstellung ist die Einfärbung nach Dichte. Pro Zeitpunkt und Fußgänger sind diese Daten schon in der Ausgabedatei gespeichert und müssen nicht mehr berechnet werden. Der Wertebereich ist mit $0.0 \le density \le 1.0$ definiert. Zur Farbgebung der Fußgänger ist die Verwendung des HSV-Farbraums geeignet zudem THREE.js die Methode \verb+setHSV(h,s,v)+ implementiert. Der Farbwert wird beim HSV-Farbraum über den Farbton $H$ (engl. \emph{hue}), die Farbsättigung $S$ (engl. \emph{saturation}) und den Hellwert $V$ (engl. \emph{value}) bestimmt. Während $S$ und $V$ als Prozentwerte angegeben werden, wird für $H$ eine Farbwinkelangabe auf dem Farbkreis verwendet.
+
+Bild: Color cone(CC-BY-SA-3.0 )
+
+Für die Dichte soll der Farbton zwischen grün ($H=105^\circ$) für einen Wert von $0.0$ und rot ($H=0^\circ$) für den Maximalwert von $1.0$ variieren. Sättigung und Hellwert bleiben unverändert.
+\begin{verb}
+    particles.colors[i].setHSV(105-105*density,1,1);
+\end{verb}
+
+Der Funktionsaufruf muss für jeden Fußgänger für jeden Zeitpunkt erfolgen.
+
+
+\subsubsection{Einfärbung nach Geschwindigkeit}
+
+Es ist möglich die Geschwindigkeit der Fußgänger ebenfalls farbilch zu kodieren. Jedoch ist diese Information nicht in den Datensätzen enthalten und muss in Echtzeit berechnet werden. Dazu wird die Distanz zwischen den aktuellen Koordinaten und den Koordinaten des vorhergehenden Zeitpunkts berechnet. Je Höher die zurückgelegte Distanz, um so höher auch die Geschwindigkeit. ... die zurückgelegte Distanz zwischen zwei auf einander folgenden Zeitpunkten zwischen $0$ und $30$ liegt. War der Fußgänger im vorherigen Schritt nicht sichtbar, ist es nicht möglich eine Geschwindigkeit zu berechnen und der Fußgänger wird in grau dargestellt.
+
+
+\subsubsection{Einfärbung nach Gruppen}
+
+In der Ausgabedatei kann ein Datenblock angelegt werden, in dem einzelne Fußgänger zu Gruppen zusammen geordnet werden können. Gruppen haben Auswirkungen auf die Simulationsergebnisse und sind deshalb auch bei der Auswertung interessant. Die Gruppenzugehörigkeit kann sich, sofern vorhanden, auch farblich visualisieren lassen. Bei der Farbverteilung der Gruppen wird bei $H_0=0^\circ$ begonnen und nach der Funktion $H_i=(i*173)mod360$ die weiteren Farbwerte vergeben. Durch die Verwendung der Primzahl $173$ ist bereits bei zwei Gruppen eine gute Unterscheidung der Farben möglich, bei vielen Gruppen die Wahrscheinlichkeit einer doppelten Verwendung einer Farbe niedrig und die Verteilung über das Farbspektrum groß. Die Einfärbung der Fußgängerobjekte nach Gruppenzugehörigkeit muss nur einmal zu Beginn durchgeführt werden und ändert sich während der Visualisierung nicht mehr.
+

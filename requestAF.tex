@@ -1,0 +1,6 @@
+
+%http://www.nczonline.net/blog/2011/05/03/better-javascript-animations-with-requestanimationframe/
+%http://stackoverflow.com/questions/729921/settimeout-or-setinterval
+
+
+Um Animationen in JavaScript auszuführen wurden die Funktionen \verb+setTimeout(function,delay)+ oder \verb+setInterval(function,interval)+ verwendet. Diese rufen dann in einem festgelegten Rhythmus eine Funktion auf, die inkrementell die Animation ausführt. Während \verb+setInterval+ nur einmalig aufgerufen wird und dann von alleine die Funktion im angegebenen Intervall aufruft, muss \verb+setTimeout+ nach der Ausführung des Animationsschritts erneut rekursiv aufgerufen werden. Jedoch gibt es einige Nachteile mit der Verwendung dieser Methoden. Die 

@@ -19,7 +19,7 @@ Die WebGL-Programmierung erfolgt in JavaScript und die Programmierung der Shader
 
 Mittels des in Kapitel \ref{initwebgl} beschriebenen Funktionsaufrufs kann die Initialisierung eines WebGL-Kontexts wie folgt aussehen: \cite{html5rocks}
 
-\begin{verbatim}
+\begin{lstlisting}[caption=Initialisierung eines WebGL-Kontexts]
 <script type="text/javascript">
     function init() {
         canvas = document.getElementById("c");
@@ -33,21 +33,24 @@ Mittels des in Kapitel \ref{initwebgl} beschriebenen Funktionsaufrufs kann die I
     window.onload = init;
 </script>
 <canvas id="c"></canvas>
-\end{verbatim}   
+\end{lstlisting} 
 
 Zusätzlich können Vertex- und Fragment-Shader mit folgendem Mark-Up ausgezeichnet werden:
 
-\begin{verbatim}
+\begin{lstlisting}[caption=Deklaration der WebGL-Shader]
 <script id="vshader" type="x-shader/x-vertex">
     ... /* Vertex-Shader */
 </script>
 <script id="fshader" type="x-shader/x-fragment">
     ... /* Fragment-Shader */
 </script>
-\end{verbatim}
+\end{lstlisting} 
+
+WebGL verwendet ein eigenes kartesisches Koordinatensystem das unabhängig von der Größe und Auflösung des canvas-Elements ist. Der Wertebereich der x-, y- und z-Achse liegt im Intervall $[-1;1]$. Die x-Achse beginnt auf der linken Seite mit $-1$, die y-Achse hat den Wert $-1$ an der unteren Bildkante. Die z-Ache zur Tiefenbestimmung hat für die nächsten Objekte den Wert $-1$ und für die entferntesten den Wert $1$. Für die Darstellung auf dem Bildschrim werden die WebGL-Koordinaten dann auf die canvas-Koordinaten umgerechnet.
 
 
 \subsubsection{Die WebGL-Rendering-Pipeline}
+\label{pipeline}
 Folgende Schritte werden bei der Berechnung eines Bilds bei der OpenGL-ES-/WebGL-Technologie durchlaufen. Der Ablauf ist vereinfacht dargestellt und weitaus identisch mit der Arbeitsweise anderer Grafik-Bibliotheken. \cite{beginnersGuide} \cite{operawebgl} \cite{Shreiner}
 
 \begin{enumerate}
@@ -125,21 +128,25 @@ Für die Entwicklung von Applikationen unterstützt die Android-Plattform ebenso d
 \subsection{Sicherheit in WebGL}
 \label{webglsec}
 
-Im Mai 2011 beschrieb \emph{Context Information Security} mehrere mögliche Angriffsszenarien mit Hilfe von manipulierten WebGL-Inhalten. \cite{contextwebgl}
+Im Mai 2011 beschrieb \emph{Context Information Security} mehrere mögliche Angriffsszenarien mit Hilfe von manipulierten WebGL-Inhalten. \cite{contextwebgl} Generell stellt WebGL ein hohes Bedrohungspotential dar, da es den direkten Zugriff von Webseiten auf die Hardware des Rechners zulässt. Natürlich versuchen Browserhersteller, die Khronos Group und die Grafikkartenhersteller diese Angriffe zu verhindern, trotzdem sind diverse Szenarien denkbar, in denen WebGL dazu genutzt werden kann den Rechner anzugreifen.
 
 \subsubsection{Denial-of-Service-Attacken}
 
-Mittels sehr komplexer 3D-Geometrien oder extrem aufwändiger Shaderprogramme wird dabei die Grafikkarte so lange beansprucht, dass weder andere Programme noch das Betriebssystem die Grafikkarte nutzen können und der Rechner so unter Umständen abstürzt.  \cite{contextwebgl2}
+Mittels sehr komplexer 3D-Geometrien oder extrem aufwändiger Shaderprogramme wird die Grafikkarte so lange beansprucht, dass weder andere Programme noch das Betriebssystem die Grafikkarte nutzen können und der Rechner so unter Umständen abstürzt oder unbenutzbar wird. Gegen diese Art von Angriff wurden bisher kaum Maßnahmen ergriffen. Seit Windows Vista implementiert Microsoft einen Sicherheitsmechaniasmus, der die Grafikkarte zurücksetzt, wenn diese für über zwei Sekunden nicht mehr reagiert. Dieses Vorgehen schlägt auch die Khronos Group für OpenGL-kompatible Grafikkarten in der Erweiterung \emph{GL\_ARB\_robustness} vor, jedoch haben noch nicht alle Grafikkartenhersteller diese Erweiterung implementiert. Somit sind aktuell viele System für diese Art von Angriff gefährdet. \cite{contextwebgl2}
+
+% http://msdn.microsoft.com/en-us/windows/hardware/gg487368.aspx
+% http://www.khronos.org/news/permalink/webgl-security
 
 \subsubsection{Zugriff auf den Frame-Buffer}
 
-Die WebGL-Technologie ermöglicht Webseiten den Zugriff auf den Inhalt des Frame-Buffers der Grafikkarte. Laut Spezifikation ist der Zugriff auf den Teil des Frame-Buffers beschränkt, der den Inhalt des canvas-Elements speichert. Jedoch kam es durch fehlerhafte Implementierungen des WebGL-Standards und Bugs in Grafikkarten-Treibern dazu, dass auch andere Inhalte des Frame-Buffers in das canvas-Element gezeichnet werden konnten. So konnten Informationen ausgelesen werden, die der Nutzer beispielsweise in anderen Applikationen oder auf seinem Desktop dargestellt hat. Es ist nicht ausgeschlossen, dass durch neue Sicherheitslücken dieser Angriff wieder möglich wird. \cite{contextwebgl2}
+Die WebGL-Technologie ermöglicht Webseiten den Zugriff auf den Inhalt des Frame-Buffers der Grafikkarte. Der Frame-Buffer ist ein gemeinsam genutzter Speicherbereich in dem alle auf dem Bildschirm dargestellten Inhalte liegen. Deshalb ist laut Spezifikation der Zugriff auf den Teil des Frame-Buffers beschränkt, der den Inhalt des canvas-Elements speichert. Jedoch kam es durch fehlerhafte Implementierungen des WebGL-Standards und Bugs in Grafikkarten-Treibern dazu, dass auch andere Inhalte des Frame-Buffers in das canvas-Element gezeichnet werden konnten. So konnten Informationen ausgelesen werden, die der Nutzer beispielsweise in anderen Applikationen oder auf seinem Desktop dargestellt hat. Seitens Khronos Group un der Grafikkartenhersteller wurden diese Fehler behoben. Es ist jedoch nicht ausgeschlossen, dass durch neue Sicherheitslücken dieser Angriff wieder ermöglicht wird. \cite{contextwebgl2}
 
 \subsubsection{Cross-Domain Texturen}
 
-Das Nachladen externer Modelle oder Texturen kann den Zugriff auf fremde Ressourcen erfordern. Ein Sicherheitskonzept, das mit \emph{Netscape Navigator 2.0} für clientseitige Skriptsprachen, wie beispielsweise JavaScript, eingeführt wurde ist die \emph{Same-Origin-Policy (SOP)}. Diese verbietet solche Zugriffe, zum Beispiel per \emph{XMLHttpRequest}. Sie verlangt, dass Zugriffe innerhalb einer Webseite nur auf Ressourcen der selben Domain, über den selben Port mittels des selben Protokolls erfolgen dürfen. Das betrifft nicht das Einbinden fremder Inhalte, wie das Einbetten eines Bildes, sondern den lesenden Zugriff eines Skripts auf solche Inhalte. Dadurch könnten beispielsweise Inhalte die eine Zugangsberechtigung benötigen lokal von fremden Seiten eingelesen und übertragen werden. \cite{MDNsop}
+Das Nachladen externer Modelle oder Texturen kann den Zugriff auf fremde Ressourcen erfordern. Ein Sicherheitskonzept, das mit \emph{Netscape Navigator 2.0} für clientseitige Skriptsprachen, wie beispielsweise JavaScript, eingeführt wurde ist die \emph{Same-Origin-Policy (SOP)}. Diese verbietet clientseitige lesende Zugriffe, zum Beispiel per \emph{XMLHttpRequest}, auf fremde Ressourcen. Sie verlangt, dass Zugriffe innerhalb einer Webseite nur auf Ressourcen der selben Domain, über den selben Port mittels des selben Protokolls erfolgen dürfen. Das betrifft nicht das Einbinden fremder Inhalte, wie das Einbetten eines Bildes, sondern den lesenden Zugriff eines Skripts auf solche Inhalte. Durch einen clientseitigen lesenden Zugriff könnten Informationen von fremden Seiten ausgelesen werden. Hätte ein Nutzer beispielsweise eine Banking-Seite geöffnet, könnte eine andere Seite deren Inhalte einlesen und zu einem fremden Server übertragen. Daher wird der clientseitige lesende Zugriff im Normalfall auf die jeweilige Domain beschränkt. \cite{MDNsop}
 
-Um dennoch entfernte Ressoucen nutzen zu können wurde \emph{Cross-Origin-Resource-Sharing (CORS)} entwickelt. Dabei gibt der ausliefernde Server in seinem HTTP-Header an, welche fremden Seiten seine Ressourcen lesen dürfen. Dabei ist auch die Verwendung einer Wildcard \verb+*+ möglich. \cite{cors} \cite{corsbug}
+Um dennoch entfernte Ressoucen nutzen zu können wurde \emph{Cross-Origin-Resource-Sharing (CORS)} entwickelt. Dabei gibt der ausliefernde Server in seinem HTTP-Header an, welche fremden Seiten seine Ressourcen lesen dürfen. Dabei ist auch die Verwendung einer Wildcard \verb+*+ möglich um den lesenden Zugriff für alle fremden Seiten zuermöglichen. \cite{cors} \cite{corsbug}
+
 
 
 

@@ -1,0 +1,77 @@
+\input{thesis_header}%mit allen noetigen Stildefinitionen, Paketeinbindungen, etc. - FIX
+%---------------------------------- Bitte ausfuellen! --------------------------------
+\newcommand{\DAtype}{Bachelorarbeit\\[1ex] 
+}%Experimentelle/Theoretische/Konstruktive Semesterarbeit/Diplomarbeit
+\newcommand{\DAthema}{Webbasierte 3D-Postvisualisierung \\ von Fußgängersimulationsdaten}
+\newcommand{\DAautor}{Daniel Büchele}
+\newcommand{\Matrikel}{10022975 (LMU)}
+\newcommand{\DAort}{München}%für Unterschrift, Ort, Datum
+\newcommand{\DAautorAnschrift}{Clermontstr.~10\\D-82131 Gauting\\e-Mail: daniel@buechele.cc}
+\newcommand{\DAprofessor}{Dipl.-Inf. Angelika Kneidl} %1. und offizieller 
+\newcommand{\DAbetreuer}{Mustafa K. Isik} %2. und i.d.R. inoffizieller Betreuer
+\newcommand{\DAausgabe}{30. April 2012}
+\newcommand{\DAabgabe}{17. September 2012}
+\newcommand{\AdresseLehrstuhl}{Fakultät für Bauingenieur- und Vermessungswesen\\
+Lehrstuhl für Computergestützte Modellierung und Simulation\\
+Technische Universität München\\
+Arcisstraße 21\\
+D-80333 München}
+%--------------------------------------------------------------------------------------------
+
+
+\hyphenation{Java-Script}
+\hyphenation{WebGL}
+
+
+\begin{document}
+\input{chapter/00a_titlepage}		% FIX, titelseite.tex braucht i.d.R. nicht modifiziert zu werden!
+\input{chapter/00b_declaration}		% falls es sich um eine Diplomarbeit handelt, hier eidesstattliche Erklaerung einbinden; auch FIX und nicht abzuaendern, bei Semesterarbeiten ist mit dem Betreuer abzuklaeren ob diese noetig ist.
+\tableofcontents		% Inhaltsverzeichnix
+\cleardoublepage
+%--------------------------- Ab hier der eigentliche Inhalt der SA ---------------------
+\pagestyle{plain}		% fancy header
+\parskip 8pt
+%\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection. #1}{}}
+\pagenumbering{arabic}
+
+
+
+
+%\input{chapter/01_Introduction}
+%\input{chapter/02_Theory}
+%\input{chapter/03_Conclusion}
+
+\include{chapter/einleitung}
+
+\include{chapter/html5}
+\include{chapter/browser3D}
+\include{chapter/webGL}
+
+\include{chapter/sumoviz}
+\include{chapter/couchDB}
+\include{chapter/geometry}
+\include{chapter/requestAF}
+
+\include{chapter/controls}
+\include{chapter/pedestrians}
+
+\include{chapter/erweiterungen}
+
+%Übernommen aus den Folien die als Hinweise zur Erstellung von Klausuren und Übungen existieren
+%--------------------------- und auch schon Anhang und Literaturverzeichnis
+\cleardoublepage
+\begin{appendix}
+\include{chapter/Attachment_B_CD}
+\end{appendix}
+%\input{chapter/Appendix} %nur ein Beispiel
+%---------------------------
+\cleardoublepage
+\listoffigures %Abbildungsverzeichnis
+\listoftables %Tabellenverzeichnis
+%---
+\bibliographystyle{alpha}%{apalike}%{unsrt}{elsart-harv}
+%\bibliography{./literature/references}%bei mehreren bib-files: \bibliography{bibfile1,bibfile2}
+\include{chapter/bibliography}
+%---
+\end{document}

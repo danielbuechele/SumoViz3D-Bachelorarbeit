@@ -1,0 +1,94 @@
+\chapter{Analyse und Zusammenfassung}
+
+
+\section{Leistungsanalyse von SumoViz3D}
+\label{leistungsanalyse}
+Um die Leistungsfähigkeit von SumoViz3D zu analysieren wurden zwei Tests durchgeführt. Einmal wurde ein relativ kleiner Datensatz verwendet, in einem weiteren Test eine sehr große Datenmenge. Die Tests wurden auf einem Testsystem\footnote{Apple MacBook Pro unter Mac OS 10.8.1, 2,3 GHz Intel Core i7, 8GB Arbeitsspeicher, NVIDIA GeForce GT 650M mit 1GB Grafikspeicher} in Google Chrome\footnote{Version 21.0.1180.89} durchgeführt und können sich je nach System extrem unterscheiden. Auch auf dem selben System hängt die Leistungsfähigkeit noch von vielen Faktoren wie beispielsweise der Auslastung der Grafikkarte durch verschiedene Monitorgrößen, den verwendeten Browser oder den Treibern der Grafikkarte ab. 
+
+% http://www.apple.com/macbook-pro/specs/
+
+Grundsätzlich sind zwei Faktoren ausschlaggebend für die Geschwindigkeit von SumoViz3D. Einerseits müssen zu Beginn der Visualisierung alle benötigten Daten übertragen werden. Das beinhaltet hauptsächlich Simulationsdaten, die je nach Umfang der Simulation erhebliche Größen annehmen können. Hinzu kommen JavaScript-Bibliotheken und -Code (832~KB), 3D-Modelle und Texturen (710~KB), sowie HTML und CSS zur Darstellung (43~KB). In Summe betragen die benötigten Daten 1585~KB, können aber variieren, wenn beispielsweise aufwändigere Texturen verwendet werden.
+
+Andererseits benötigt auch das Einlesen und Verarbeiten der Daten Zeit. Diese wird im Folgenden anhand zweier Beispieldatensätze analysiert.
+
+\subsection{Analyse mit bis zu 10000 Fußgängern}
+\label{betzenberg}
+Die Analyse der Leistung wurde mit einem Testdatensatz einer Simulation des ``Fritz-Walter-Stadions'' (ehemals Betzenbergstadion) in Kaiserslautern durchgeführt. Das Stadion hat eine schwierige Lage, da es in einem Wohngebiet liegt und die Fußgänger das Stadion nicht in alle Richtungen verlassen können. 
+
+Die Ausgabedatei der Simulation hat eine Größe von 63~MB und enthält 101 Geometrieobjekte sowie 301 Simulationsschritte der Fußgängerdaten. Die maximale Anzahl dargestellter Fußgängerobjekte wird im letzten Simulationsschritt mit 10716 Objekten erreicht. Durchschnittlich werden 5392 Objekte dargestellt. Neben der Übertragungszeit der Daten benötigt bei dieser Simulation das parsen der Geometrie- und Fußgängerdaten zu einem JavaScript-Objekt 12,25~Sekunden. Die Anzahl der Fußgänger steigt bei diesem Datensatz stetig an und die Leistung wurde von 0 bis 10000 angezeigten Fußgängern an 21 Punkten (in Schritten von 500) analysiert. 
+
+Die Werte in den Abbildungen \ref{analysis3}, \ref{analysis2} und \ref{analysis1} wurden mittels \emph{Webkit Inspector} erhobenen. JavaScripts \emph{Garbage Collection} oder andere Auslastung des Testsystems lassen wie gemessenen Werte variieren. Deshalb wurde jeweilse der Mittelwert mehrerer Messungen gebildetSchwankungen auszugleichen. Nichtsdestotrotz handelt es sich bei dieser Messung um die Werte eines einzelnen Testsystems, die in anderen Umgebungen abweichen können.
+
+
+Der Arbeitsspeicherbedarf der Anwendung ist für die 3D-Darstellung etwa 150~MB, bei der Verwendung des Partikelsystems etwa 120~MB. Der Unterschied entsteht durch die im Speicher abgelegten 3D-Modelle, die bereits zu Beginn der Szene erstellt werden und somit unabhängig von der Anzahl der angezeigten Objekte sind. Beide Darstellungsoptionen stellen für aktuelle Systeme kein Problem im Bezug auf den verfügbaren Speicher dar.
+
+\begin{figure}[ht]
+\begin{minipage}[b]{0.48\linewidth}
+\centering
+\includegraphics[width=\textwidth]{media/analysis3.pdf}
+\caption{Dauer für das Zeichnen eines Frames in Millisekunden}
+\label{analysis3}
+\end{minipage}
+\hspace{0.3cm}
+\begin{minipage}[b]{0.48\linewidth}
+\centering
+\includegraphics[width=\textwidth]{media/analysis2.pdf}
+\caption{Dauer für das Aktualisieren der Fußgänger in Millisekunden}
+\label{analysis2}
+\end{minipage}
+\end{figure}
+
+
+Bei der Messung der JavaScript- und WebGL-Aufrufe lassen sich zwei Engstellen erkennen. Zum einen ist das die Berechnung der einzelnen Frames in der Grafikkarte, wie in Abbildung \ref{analysis3} dargestellt. Ausgeführt wird der Aufruf durch die Funktion \verb+requestAnimationFrame+ (vgl. Kapitel \ref{raf}). Bei Verwendung der 3D-Modelle steigt die Berechnungsdauer kontinuierlich mit der Zahl der Fußgänger an. Dagegen dauert das Zeichnen des Partikelsystems konstant etwa 4~ms, unabhängig von der Fußgängeranzahl. Bei der Berechnungszeit eines Frames ist es irrelevant ob die Animation abgespielt wird oder nicht, da die Grafikkarte die Frames auch bei angehaltener Simulation berechnen muss.
+
+
+
+Während des Abspielens müssen zusätzlich die Fußgängerpositionen und -farben aktualisiert werden. Diese Berechnung stellt die zweite Engstelle dar. Unabhängig von der Berechnung der Frames wird alle 200~ms der nächste Animationsschritt geladen. Die Aktualisierung muss per JavaScript im Prozessor erfolgen. Hier verhalten sich Partikelsystem und 3D-Modelle nahezu identisch, wie in Abbilung \ref{analysis2} zu erkennen ist. Die Ausführungszeit bei der Darstellung der 3D-Modelle ist etwas höher, da die Drehung der Figuren zusätzlich berechenet werden muss. Ab etwa 9000 Objekten überschreitet die Berechnungszeit die 200~ms und damit kann nicht mehr jeder einzelne Animationsschritt dargestellt werden.
+
+
+
+
+\begin{wrapfigure}{r}{0.59\textwidth}
+  %\begin{center}
+    \includegraphics[width=0.6\textwidth]{media/analysis1.pdf}
+  %\end{center}
+  \caption{Vergleich der Framerate für Partikel und 3D-Modelle}
+  \label{analysis1}
+\end{wrapfigure}
+
+Abschließend wurde die Framerate (engl. \emph{frames per second}, kurz \emph{fps}) analysiert. Dieser Wert gibt die Anzahl der Bilder an, die pro Sekunde in das canvas-Element gezeichnet werden und ist hauptsächlich abhängig von den Ausführungszeiten der in Abbildung \ref{analysis3} und \ref{analysis2} betrachteten Funktionen. Welche Framerate für eine flüssige Animation notwendig ist unterscheidet sich im subjektiven Empfinden, spätestens bei einer Framerate unter 20~fps ist jedoch ein deutliches Ruckeln bemerkbar. Ist die Animation pausiert, so müssen keine neuen Positionen der Fußgänger berechnet werden und es steht mehr Leistung für die Berechnung der Frames zur Verfügung. Die Framerate bei der Verwendung des Partikelsystems ist im pausierten Zustand konstant bei 55~fps, während des Abspielens fällt sie aber mit zunehmender Fußgängerzahl. Für die Größe des Testdatensatzes von etwa 10000 Fußgängern ist eine flüssige Darstellung gerade noch möglich. Bei der Verwendung der 3D-Modelle fällt die Framerate deutlich schneller ab. Pausiert lassen sich etwa 2000 Fußgängerobjekten mit 20~fps darstellen, läuft die Animation sind ungefähr 1500 Objekte bei gleicher Framerate möglich. An dieser Stelle mangelt es an der Leistungsfähigkeit der Grafikkarte, mit schnelleren Grafikkarten wären mehr 3D-Modelle möglich.
+
+Die Darstellung als Partikelsystem ist für große Datenmengen geeignet, da auch während dem Abspielen der Simulation noch eine akzeptable Framerate erreicht werden kann. Für Standbilder und zur Analyse einzelner Zeitpunkte können trotzdem die 3D-Modelle verwendet werden. Ab 2000 Fußgängern ist die Darstellung als Partikelsystem notwendig, bei Szenen mit mehr als 10000 Objekten war auf dem Testsystem keine flüssige Animation mehr möglich.
+
+
+% http://www.abendzeitung-muenchen.de/inhalt.simulation-wiesn-panik-diese-software-kann-sie-berechnen.2d7d8ded-1957-4507-b484-38a55c0651d9.html
+
+
+\section{Mögliche Erweiterungen für SumoViz3D}
+\label{erweiterungen}
+Mit der Entwicklung von SumoViz3D wurde der Grundstein für eine vollwertige Visualisierung und Auswertung der Fußgängersimulationsdaten gelegt. Eine große Menge an Erweiterungsmöglichkeiten steht offen. Im Folgenden werden einige davon kurz erläutert.
+
+\begin{itemize}
+\item Bisher ist die Darstellung verschiedener Stockwerke nicht möglich. Diese Daten sind aber in der Ausgabedatei mit gespeichert und stehen somit zur Verfügung. Gerade durch die dreidimensionale Darstellung in SumoViz3D würde es sich anbieten diese Funktionalität zu integrieren. Problematisch bei der Darstellung der Stockwerke ist die Verdeckung tieferliegenderer Stockwerke.
+
+\item Aktuell ist es zwar möglich, Standbilder der Visualisierung herunterzuladen, nicht aber den Ablauf der Animation in Form eines Videos. Die Standbildfunktion ist als Teil der canvas-API definiert und in der Funktion \verb+toDataURL()+ implementiert. Zwar ist es nicht möglich Bewegtbilder direkt aus dem canvas-Element zu exportieren, aber über den Abruf aller Einzelbilder könnte ein Video generiert werden. Das Video müsste entweder clientseitig berechnet, oder alle Einzelbilder an der Server übertragen werden. Bei der clientseitigen Berechnung ist jedoch die Funktionalität mittels JavaScript sehr eingeschränkt.
+
+\item Die Auswertung und Aufbereitung der Simulationsdaten lässt sich noch wesentlich erweitern. Weitere Einfärbungsoptionen für die Fußgänger beispielsweise nach Quelle oder Ziel sind denkbar. Entsprechende Daten sind nicht in den Datensätzen enthalten und müssten berechnet werden. Denkbar sind auch statistische Auswertungswerkzeuge, um zum Beispiel den Fußgängerdurchfluss an bestimmten Stellen zu messen.
+
+\item Da durch die Änderung des Datenformats jeder Fußgänger nun einzeln identifizierbar ist, können diese Daten für die Visualisierung genutzt werden. Beispielsweise können die Wege der einzelnen Fußgänger mittels Linien dargestellt werden, die Kamera kann den Weg eines Fußgängers verfolgen und zu jedem Fußgänger können Auswertungen der Geschwindigkeit und Dichte über die Zeit generiert werden.
+
+\item Die einzelnen Zeitpunkte der Simulation werden in dieser Version von SumoViz3D schrittweise gerendert, wodurch die Fußgängerobjekte von einer Position zur nächsten springen. In einer Erweiterung könnte zwischen zwei aufeinanderfolgenden Schritten interpoliert und so ein flüssigerer Animationablauf erzeugt werden. Dazu muss das Zeichnen der Fußgänger in der \verb+requestAnimationFrame+-Methode stattfinden. In diesem Zuge kann auch eine Steuerung der Abspielgeschwindigkeit implementiert werden.
+
+\item Die Übertragung der Simulationsdaten über das Internet kann, gerade bei umfangreichen Szenarien, einige Zeit in Anspruch nehmen. Hier könnten die Daten partiell bei Bedarf nachgeladen werden. Mit der Verwendung von JavaScript \emph{WebWorkern} wäre ein paralleles Herunterladen und parsen der kommenden Simulationsschritte möglich, ohne den Ablauf der Visualisierung zu unterbrechen. Größe der Daten und Frequenz der Anfragen sollten abhängig von der Verbindungsqualität ermittelt und angepasst werden.
+\end{itemize}
+
+
+\section{Zusammenfassung}
+
+
+Zusammenfassend lässt sich sagen, dass die webbasierte Entwicklung von 3D-Applikationen noch in einer frühen Entwicklungsphase steckt. Sowohl bei der Implementierung der WebGL- und HTML5-Funktionen in den verschiedenen Browsern, als auch bei der verfügbaren Rechenleistung ist in den nächsten Jahren noch ein deutlicher Fortschritt zu erwarten. Auch die verwendete Grafikbibliothek THREE.js befindet sich ein stetiger Weiterentwicklung und wird in neueren Versionen noch effizienter und schneller werden.
+Die SumoViz-Architektur, im speziellen die CouchDB-Datenbank, nutzt einen klassischen Trade-off der Informatik. Fehlende Rechenleistung wird durch einen Mehrverbrauch an Speicherplatz ausgeglichen. Die von CouchDB berechneten Daten werden gespeichert und müssen bei einem Aufruf nicht erneut berechnet werden. So kann die einmalige Berechnung der Daten längere Zeit dauern, da die Daten danach sofort zur Verfügung stehen. Zwar kostet dieses Verfahren viel Speicherplatz, aber nur so ist eine derartige Applikation mit den aktuellen Technologien überhaupt realisierbar.
+Trotzdem sind Webapplikationen eine gute Möglichkeit plattformübergreifend Anwendungen zu entwickeln. Durch die Client-Server-Architektur stehen Daten überall zur Verfügung.
+Vor einigen Jahren wäre eine dreidimensionale Simulationsvisualisierung im Browser noch komplett undenkbar gewesen. Mit SumoViz3D steht jetzt ein umfangreiches Werkzeug für die Darstellung und Analyse von Fußgängerdaten zur Verfügung. Damit kann es sowohl für die Forschung an neuen Modellen der Simulation als auch die Sicherheit auf Großveranstaltungen einen Beitrag leisten.
+
+

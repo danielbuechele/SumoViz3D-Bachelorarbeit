@@ -1,0 +1,116 @@
+% !TEX root =  thesis.tex
+\documentclass[11pt,oneside,a4paper]{book}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%f퇾 das Einbinden von Bildern und Tabellen
+\usepackage{booktabs} 		%f퇾 tolle tabellen
+\usepackage{threeparttable}
+\usepackage{longtable}
+%\usepackage[normal,small,bf]{caption} %erm늛licht mehrzeilige Bildunterschriften use [hang] f퇾 einger퇭kte Bildunterschrift
+
+
+\usepackage{psfrag}
+%f퇾 die Bibliography
+\usepackage{natbib}		% more flexibility with citations
+\usepackage{ifpdf}
+\usepackage{footnote}
+%Verwendung von Farben
+\usepackage{xcolor}
+%bedruckten Bereich der Seite anpassen
+\usepackage[left=3.0cm, right=2.5cm, top=2.5cm,bottom=2.0cm,includeheadfoot]{geometry}
+% Formatierung Kapitelueberschriften
+\usepackage{titlesec}
+\usepackage[T1]{fontenc} % sonst geht \hyphenation nicht mit Umlauten
+\usepackage{listings}
+\usepackage{color}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+ 
+\usepackage{lmodern}
+
+\lstset{ %
+  language=Java,                % the language of the code
+  basicstyle=\ttfamily\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=shadowbox,                   % adds a frame around the code
+  rulecolor=\color{gray},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{black},          % keyword style
+  commentstyle=\color{black},       % comment style
+  stringstyle=\color{black},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...}               % if you want to add more keywords to the set
+}
+
+
+
+%\titleformat{?땈erschriftenklasse?}[Absatzformatierung?]{?Textformatierung?} {?Nummerierung?}{?Abstand zwischen Nummerierung und 땈erschriftentext?}{?Code vor der 땈erschrift?}[?Code nach der 땈erschrift?]
+%\titleformat{\chapter}[hang]{\huge\bfseries}{\thechapter\quad}{0pt}{}
+%\titlespacing{?땈erschriftenklasse?}{?Linker Einzug?}{?Platz oberhalb?}{?Platz unterhalb?}[?rechter Einzug?]
+%\titlespacing{\chapter}{0pt}{0em}{6pt}
+%----------------------------------------------------------------------------------------------------------------------------------------------
+%Stil der Seite
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+	\fancyhf{} % clear all header and footer fields
+	\fancyhead[EL,OR]{\slshape \thepage} % except the center
+	\fancyhead[ER]{\slshape \leftmark}
+	\fancyhead[OL]{\slshape \rightmark}
+}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection. #1}{}}
+%
+\pagestyle{empty}%f퇾 die Titelseiten zumindest, am Ende der Titelseite umschalten auf \pagestyle{fancyplain}
+\pagenumbering{Roman}%f퇾 die Titelseiten zumindest, am Ende der Titelseite umschalten auf \pagenumbering{arabic}
+%------------------------je nach Kommando (pdflatex / latex) jeweilige Paketeinbindung-----------------------------
+\definecolor{linkblue}{rgb}{0,0.1,0.6}
+\definecolor{citegreen}{rgb}{0,0.25,0.15}%{0.1,0.5,0.4}%{0.125,0.6,0.5}
+\definecolor{linkred}{rgb}{0.8,0,0.005}%{0.6,0,0.1}
+\definecolor{mailviolet}{rgb}{0.3,0,0.35}%{0.6,0,0.1}
+\definecolor{tumblue}{rgb}{0,0.396,0.741}
+
+% Zum Setzen von URLs
+\definecolor{darkred}{rgb}{.25,0,0}
+\definecolor{darkgreen}{rgb}{0,.2,0}
+\definecolor{darkmagenta}{rgb}{.2,0,.2}
+\definecolor{darkcyan}{rgb}{0,.15,.15}
+\usepackage[plainpages=false,bookmarks=true,bookmarksopen=true,colorlinks=true,
+  linkcolor=darkred,citecolor=darkgreen,filecolor=darkmagenta,
+  menucolor=darkred,urlcolor=darkcyan]{hyperref}
+
+
+% pdflatex: Bilder in den Formaten .jpeg, .png und .pdf
+% latex: Bilder im .eps-Format
+\usepackage{graphicx}
+
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+%Zeilenabst뎝de regulieren mit \singlespacing, \onehalfspacing, \doublespacing
+\usepackage{subfig} %{subfigure} alt
+\usepackage{setspace}
+\onehalfspacing
+\parindent 0pt
+%Schriftart Sans Serif
+%\renewcommand*\familydefault{\sfdefault} 
+
+
+
+

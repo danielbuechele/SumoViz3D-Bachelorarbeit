@@ -1,0 +1,55 @@
+\chapter{Fußgängersimulation und Visualisierung}
+
+
+Bei der Planung von Großveranstaltungen oder der Konzeption neuer Gebäude werden Fußgängersimulationen eingesetzt um Evakuierungsszenarien zu simulieren und ggf. Katastrophen vorzubeugen. Analysen und Simulationen, warum beispielsweise auf Autobahnen ein Stau entsteht, sind mittlerweile problemlos machbar. Die Vorhersage, welchen Weg ein Fußgänger einschlagen wird ist dagegen ein größeres Problem. Während sich Autos auf festen Fahrbahnen bewegen und sich wesentlich strikter an Verkehrsregeln halten, haben Fußgänger mehr Freiheitsgrade in ihrer Bewegung. Spontan können sich Fußgänger dazu entschließen die Richtung zu ändern, versuchen Gedränge aus dem Weg zu gehen und verlieren sogar manchmal ihr Ziel aus den Augen.
+
+Um das Verhalten der Fußgänger zu simulieren werden verschiedene Verfahren angewandt. Ein populäres Modell ist aus der Strömungslehre entliehen. Es betrachtet einen einzelnen Fußgänger wie ein Molekül in der Luft, das sich durch eine Strömung bewegt. Wie Gase können Fußgänger nicht beliebig zusammengepresst werden. Dieses Modell funktioniert aber bei weniger dicht gedrängten Szenarien nicht mehr. Ein anderes Modell sind zelluläre Automaten. Dabei wird die zur Verfügung stehende Fläche schachbrettartig eingeteilt, wobei jedes Feld entweder von einer Person belegt oder frei sein kann. Anhand des aktuellen Zustands wird dann die Belegung im folgenden Schritt berechnet. \cite{spon1}
+
+Außerdem spielen bei den Wegen von Fußgängern noch andere Faktoren mit. So gibt es beispielsweise einen kulturell geprägten Mindestabstand zu anderen Personen, der in Asien meist höher ist als in Europa, in Südamerika dagegen geringer. Soziale Konventionen und unterbewusste Entscheidungen haben ebenso einen Einfluss auf die Wegewahl. Fußgänger passen ihre Geschwindigkeit der Masse an um einen Aufprall zu vermeiden, in einem Gedränge können sich Bahnen bilden, die sich in die selbe Richtung bewegen und in Paniksituationen können sich Menschen komplett irrational verhalten. \cite{spon1}
+
+Ein viel zitierter Extremfall ist das Unglück auf der ``Love Parade'' am 24.07.2010 bei dem 21 Personen im Gedränge der panischen Menschenmassen zu Tode kamen. Dieses Ereignis hat sicherlich das Bewusstsein um die Notwendigkeit akurater Simulationen gestärkt, um so Engstellen und potentielle Gefahrenpunkte schon im Vorfeld zu erkennen und durch Sicherheitskräfte oder bauliche Maßnahmen zu entschärfen. \cite{spon2}
+
+In dieser Arbeit wird die Erstellung einer dreidimensionalen webbasierten Visualisierung von Fußgängersimulationsdaten beschrieben. Die Ergebnisse der Simulationen sind als Webapplikation überall abrufbar und können einfach an Veranstalter, Sicherheits- und Rettungskräfte weitergegeben werden. So können diese sich bereits im Vorfeld ein Bild von der Situation vor Ort machen. Dabei hilft auch die dreidimensionale Darstellung, mit einer freien Navigation durch die Szene und realistischer Abbildung der Gegebenheiten vor Ort. So lässt sich erkennen ob Hindernisse ggf. entfernt werden könnten, die Höhe von Hindernissen einschätzen und eine schnellere Orientierung vor Ort gewinnen.
+
+
+
+
+% http://www.spiegel.de/wissenschaft/mensch/fussgaenger-simulation-warum-die-wege-des-menschen-unberechenbar-sind-a-699080.html
+
+% http://www.spiegel.de/wissenschaft/mensch/fussgaenger-simulation-der-kuerzeste-weg-ist-das-ziel-a-757753.html
+
+
+\section{SumoViz}
+Mustafa K. Isik entwickelte unter dem Titel ``SumoViz -- HTML5-based Visualization of Pedestrian Simulation Data'' \cite{Isi12} eine Webanwendung zur Visualisierung von Simulationsergebnissen von Fußgängerströmen. Die Simulationsergebnisse liegen in teilweise sehr großen Textdateien vor, woraus sich der Name der Applikation ableitet. Die Anwendung kümmert sich um die Bereitstellung und zweidimensionale Darstellung der Simulationsergebnisse. Die Darstellung verwendet ausschließlich HTML5 JavaScript und die canvas-API und ist damit ohne die Installation von Plug-Ins in allen modernen Browsern abrufbar.
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+\vspace{-15pt}
+  \includegraphics[width=0.4\textwidth]{media/sumoviz.png}
+  \caption{SumoViz \cite{Isi12}}
+  \label{oldsumo}
+  \vspace{-15pt}
+\end{wrapfigure}
+
+Die Anwendung stellt eine Draufsicht der Szenerie dar. Gebäude, Wände und andere Hindernisse werden mit schwarzen Linien symbolisiert, die Fußgänger werden als einzelne Punkt eingezeichnet (vgl. Abbildung \ref{oldsumo}). Ein Fortschrittsbalken zeigt den Zeitpunkt der Simulation an, der über Buttons veränderbar ist. Zusätzlich lässt sich ein \emph{spawn graph} einblenden, der in einem Diagramm die Anzahl der Fußgänger pro Zeitpunkt anzeigt. Für das Importieren der Textdateien mit den Simulationsergebnissen ist ein Uploader integriert.
+
+Die SumoViz-Anwendung läuft als Client-Server-Applikation (ähnlich wie in Abbildung \ref{tecstack}), bei der die Daten serverseitig gespeichert und aufbereitet werden. Die Berechnung der Darstellung erfolgt mittels der 2D-API des canvas-Elements im Browser. Die Simulationsergebnisse werden nach dem Importieren serverseitig geparst und dann in einer CouchDB-Datenbank abgelegt werden. Die Daten werden durch entsprechende Funktionen in der Datenbank gruppiert und über einen node.js-Webserver an den Client ausgeliefert. 
+
+
+
+% SumoViz, HTML5-based Visualization of Pedestrian Simulation Data, TU München, 10. Mai 2012, Mustafa K. Isik
+
+\section{SumoViz3D}
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{media/tec-stack.pdf}
+\caption{Struktureller Aufbau von SumoViz3D}
+\label{tecstack}
+\end{figure}
+
+In dieser Arbeit ist die Entwicklung der Software \emph{SumoViz3D} als Weiterentwicklung von Mustafa K. Isiks SumoViz beschrieben. SumoViz3D soll den Ansatz von SumoViz aufgreifen, aber die browserbasierte Darstellung um eine dreidimensionale Ansicht der Fußgängersimulationsdaten erweitern. Zusätzlich sollen Werte wie die Geschwindigkeit oder Dichte der Fußgänger ablesbar sein. Die Software soll kleinere Anpassungen am Aussehen der Szene ermöglichen und diese dabei möglichst realistisch darstellen.
+
+Für SumoViz3D wird die bestehende serverseitige Architektur den Anforderungen entsprechend erweitert und die Client-Seite von Grund auf neu entwickelt. Die Veränderungen, die serverseitig durchgeführt werden müssen, passen lediglich die Ausgabe der Daten an, um die für die 3D-Darstellung benötigte Werte wie Höhe, Typ des Hindernis oder Dichte der Fußgänger auszuliefern. Der Dateiimport \verb+dataimport.js+ wird um eine Funktionalität für das Importieren von Gruppendaten erweitert. 
+
+In den folgenden Kapiteln werden die serverseitigen Veränderungen an der bestehenden SumoViz-Anwendung sowie die Neuentwicklung der Client-Seite beschrieben.
+
+
+

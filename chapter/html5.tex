@@ -1,0 +1,43 @@
+\chapter{Moderne Webtechnologien}
+
+Das \emph{World Wide Web Consortium (W3C)} standardisiert Technologien die das Internet betreffen. Das Konsortium besteht aus über 300 Mitgliedern\footnote{Stand: August 2012} \cite{w3cmembers}, die über die Entstehung neuer Standards beraten und entscheiden. Da die Entstehung und Veröffentlichung neuer Standards beim W3C auf Grund der hohen Mitgliederzahl und demokratischen Strukturen oft sehr lange dauert, gründeten Vertreter von Opera, Apple und Mozilla die \emph{Web Hypertext Application Technology Working Group (WHATWG)}. Eine Arbeitsgruppe, deren Mitgliedschaft nur auf Einladung erfolgt und deren endgültige Entscheidungen einem Vorsitzenden unterliegen. Erarbeitete Entwürfe reicht die WHATWG beim W3C als Vorschlag zur Standardisierung ein. Einen Vorschlag der WHATWG nahm das W3C auch als Basis für die Spezifizierung von \emph{HTML5}. \cite{aboutw3c} \cite{keith}
+
+\section{Der HTML5-Standard}
+In der Spezifikation des W3C wird mit ``HTML5'' die Weiterentwicklung der Auszeichnungssprache HTML beschrieben. Die WHATWG dehnt den Begriff etwas weiter aus und versammelt unter dieser Bezeichnung auch einige JavaScript-Schnittstellen, wie etwa für das canvas-Element (siehe Kapitel \ref{canvasapi}), das \emph{WebSockets}-Netzwerkprotokoll oder die Nutzung von lokalem Speicher (\emph{WebStorage}). Im Sprachgebrauch wird der Begriff ``HTML5'' oft noch weiter gefasst und beinhaltet diverse weitere Technologien, die im Zuge moderner Web-Applikationen entwickelt wurden. Darunter fallen dann die Grafikbibliothek \emph{WebGL}, die \emph{Geo-Location}-API zur Abfrage des Standorts oder auch der \emph{CSS3}-Standard zur Gestaltung von Webseiten (siehe Abbildung \ref{specgraphfig}).
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{media/specGraph.pdf}
+\caption{HTML5 Spezifikations-Übersicht (CC-BY-3.0 Peter Kröner) \cite{specGraph}}
+\label{specgraphfig}
+\end{figure}
+
+
+
+Eine der Design-Entscheidungen bei der Entwicklung von HTML5 ist, den bestehenden Standard HTML 4.01 nicht zu ersetzen, sondern weiterzuentwickeln. Dadurch entsprechen die meisten Webseiten im HTML-4.01-Standard nach Anpassung der Dokumententypdeklaration direkt dem HTML5-Standard. \cite{diveInto}
+
+Die Spezifikation hat den Status ``Last Call''\footnote{Stand: 22. August 2012}. Damit fordert das W3C auf letzte Änderungsvorschläge einzureichen, bevor der Standard im Jahr 2014 den Status ``Recommendation'' erhalten soll und damit final ist. Da jedoch die Implementierung in den einzelnen Browsern weit fortgeschritten ist und kaum noch Änderungen am Standard erwartet werden, kann er bereits jetzt eingesetzt werden. \cite{w3cpr}
+
+
+\subsection{DOM und JavaScript APIs}
+
+Nach dem parsen bildet der Browser intern die hierarchische Struktur eines HTML-Dokuments in Form eines Baumes ab. Diese Abbildung wird als \emph{Document Object Model (DOM)} bezeichnet. Der Zugriff auf den DOM-Baum ist mittels einer Schnittstelle (\emph{Application Programmable Interface (API)}) für JavaScript-Anwendungen möglich. Elemente, Attribute und Texte sind als Knoten-Objekte angelegt und können ausgelesen oder manipuliert werden. \cite{mozdom}
+
+Mit der zunehmenden Nutzung von Web-Applikationen sind auch die Anforderungen an die Browser gestiegen. Zur besseren Interaktion des Nutzers mit dem Browser wurden im Umfeld des HTML5-Standards viele weitere JavaScript-APIs definiert und vom W3C standardisiert (vgl. Abbildung \ref{specgraphfig}). \cite{keith} \cite{diveInto}
+
+
+
+\subsection{Das canvas-Element}
+\label{canvasapi}
+Das \emph{canvas}-Element, wie in HTML5 definiert, ist ein rechteckiges Blockelement, das ohne weitere Anweisungen komplett unsichtbar ist: Es hat keinen sichtbaren Rahmen und der Inhalt des Elements ist transparent. In einem Dokument können sich beliebig viele canvas-Elemente befinden, die komplett unabhängig von einander sind. Jedes canvas ist im DOM-Baum verankert und kann mit einer ID versehen werden. Innerhalb des canvas-Elements kann alternativer Inhalt angegeben werden, der angezeigt wird wenn der Browser die Darstellung von canvas-Elementen nicht unterstützt. Eine beispielhafte Nutzung des Elements kann wie folgt aussehen: \cite{keith} \cite{diveInto}
+
+\verb+    <canvas id="c" width="300" height="200">Fallback</canvas>+
+
+Das Element definiert ein auflösungsabhängiges Bitmap, das in Echtzeit mit Grafikinhalten gefüllt werden kann. Laut Spezifikation definiert canvas einen JavaScript-Funktionsaufruf \verb+canvas.getContext(contextId [, ... ])+ bei dem ein Schlüsselwort in Form eines Strings als \verb+contextId+ übergeben wird. \cite{W3Ccanvas} Die \emph{WHATWG} spezifiziert zwei mögliche Kontexte: \verb+2d+ und \verb+webgl+. \cite{WHATWGcanvasContext} Der Funktionsaufruf liefert ein Objekt zurück das die jeweilige API bereitstellt oder \verb+null+ falls ein entsprechender Kontext nicht unterstützt wird.
+
+Mittels der 2D-API können einfache Zeichenoperationen ausgeführt werden. Dazu gehören Linien, Pfade, Rechtecke, Ellipsen, aber auch Texte oder Bilder können eingefügt werden. All diese Operationen werden direkt in der CPU berechnet und sind somit nicht hardwarebeschleunigt. Animationen können durch ständiges Neuzeichnen mittels JavaScript-Timer-Funktionen realisiert werden. \cite{WHATWGcanvas} \cite{diveInto}
+
+\label{initwebgl}
+
+
+% http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#drawing-text-to-the-canvas
+% http://www.peterkroener.de/was-ist-html5-und-was-nicht-und-was-haette-der-kaiser-dazu-gesagt/
